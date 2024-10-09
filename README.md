@@ -2,7 +2,7 @@
 
 ## Introduction
 
-**Goplan** is a full-stack travel booking web application that allows users to explore travel destinations, plan trips, manage travel checklists, and budget for activities. Users can create an account, save their travel plans, and manage them conveniently from their profile.
+**Goplan** is a full-stack travel plan web application that allows users to explore travel destinations, plan trips, manage travel checklists, and budget for activities. Users can create an account, save their travel plans, and manage them conveniently from their profile.
 
 ## Features
 
