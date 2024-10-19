@@ -8,29 +8,44 @@ from app.db import db
 
 
 class BaseModel(db.Model):
-    """Base model that other models will inherit from."""
+    """Base model for all other models."""
+    __abstract__ = True
+    id = db.Column(db.String(60), primary_key=True,
+                   default=lambda: str(uuid4()))
+    created_at = db.Column(db.DateTime, nullable=False,
+                           default=datetime.utcnow)
+    updated_at = db.Column(db.DateTime, nullable=False,
+                           default=datetime.utcnow)
 
-    __abstract__ = True  # Ensures this model is not created as a table
+    def __init__(self, *args, **kwargs):
+        """Constructor for BaseModel to handle object creation."""
+        if kwargs:
+            # Remove unnecessary class data
+            kwargs.pop('__class__', None)
 
-    id = db.Column(db.String(36), primary_key=True,
-                   default=lambda: str(uuid4()), nullable=False)
-    created_at = db.Column(
-        db.DateTime, default=datetime.utcnow, nullable=False)
-    updated_at = db.Column(db.DateTime, default=datetime.utcnow,
-                           onupdate=datetime.utcnow, nullable=False)
+            # Safeguard created_at and updated_at fields
+            if 'created_at' in kwargs:
+                kwargs['created_at'] = datetime.fromisoformat(
+                    kwargs['created_at'])
+            if 'updated_at' in kwargs:
+                kwargs['updated_at'] = datetime.fromisoformat(
+                    kwargs['updated_at'])
+
+            # Assign attributes based on kwargs
+            for key, value in kwargs.items():
+                setattr(self, key, value)
+        else:
+            # Default values for new instances
+            self.id = str(uuid4())
+            self.created_at = self.updated_at = datetime.utcnow()
 
     def save(self):
-        """Save the instance to the database."""
+        """Save the current instance to the database."""
         self.updated_at = datetime.utcnow()
         db.session.add(self)
         db.session.commit()
 
     def delete(self):
-        """Delete the instance from the database."""
+        """Delete the current instance from the database."""
         db.session.delete(self)
         db.session.commit()
-
-    def to_dict(self):
-        """Convert the instance to a dictionary for easy serialization."""
-        return {column.name: getattr(
-            self, column.name) for column in self.__table__.columns}
