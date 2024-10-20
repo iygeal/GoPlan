@@ -6,14 +6,17 @@ contains travel plan that inherits from the basemodel
 from app.db import db
 from app.models.base_model import BaseModel
 
+
 class TravelPlan(BaseModel):
     """Travel Plan model for the application.
     """
 
     __tablename__ = 'travel_plans'
 
-    user_id = db.Column(db.String(60), db.ForeignKey('users.id'), nullable=False)
-    location_id = db.Column(db.String(60), db.ForeignKey('locations.id'), nullable=False)
+    user_id = db.Column(db.String(60), db.ForeignKey(
+        'users.id'), nullable=False)
+    location_id = db.Column(db.String(60), db.ForeignKey(
+        'locations.id'), nullable=False)
     start_date = db.Column(db.Date, nullable=False)
     end_date = db.Column(db.Date, nullable=False)
     activities = db.Column(db.Text, nullable=True)
