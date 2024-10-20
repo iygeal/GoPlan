@@ -1,6 +1,8 @@
 #!/usr/bin/env python3
 """
-contains travel plan that inherits from the basemodel
+This module contains the TravelPlan model that inherits from BaseModel.
+The TravelPlan model represents a user's plan to travel to a specific location
+with a given budget and activities.
 """
 
 from app.db import db
@@ -8,7 +10,9 @@ from app.models.base_model import BaseModel
 
 
 class TravelPlan(BaseModel):
-    """Travel Plan model for the application.
+    """
+    Represents a travel plan for a user, including destination,
+    budget, and activities.
     """
 
     __tablename__ = 'travel_plans'
@@ -28,4 +32,7 @@ class TravelPlan(BaseModel):
     location = db.relationship('Location', back_populates='travel_plans')
 
     def __repr__(self):
+        """
+        Returns a string representation of the travel plan instance.
+        """
         return f'<TravelPlan {self.id}: {self.user.username} to {self.location.name}>'

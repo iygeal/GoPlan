@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-contains location module that inherits from BaseModel
+Contains the Location model that inherits from BaseModel.
 """
 
 from app.db import db
@@ -8,7 +8,9 @@ from app.models.base_model import BaseModel
 
 
 class Location(BaseModel):
-    """Location model for the application.
+    """
+    Represents a location for travel plans, including geographic coordinates
+    and details such as country and attractions.
     """
 
     __tablename__ = 'locations'
@@ -20,8 +22,11 @@ class Location(BaseModel):
     country = db.Column(db.String(100), nullable=False)
     popular_attractions = db.Column(db.Text, nullable=True)
 
-    # Relationship
+    # Relationships
     travel_plans = db.relationship('TravelPlan', back_populates='location')
 
     def __repr__(self):
+        """
+        Returns a string representation of the location instance.
+        """
         return f'<Location {self.name}, {self.country}>'
