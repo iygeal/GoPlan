@@ -1,0 +1,145 @@
+/* Homepage.css */
+
+/* General styles */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: Arial, Helvetica, sans-serif;
+  }
+  
+  body {
+    background-color: #f1f1f1eb; /* Background color */
+  }
+  
+  /* Navbar styles */
+  .navbar {
+    padding: 15px 20px; /* Adjust padding for the navbar */
+  }
+  
+  .logo {
+    width: 10rem; /* Logo size */
+    height: auto;
+  }
+  
+  .nav-link:hover {
+    color: #6ab806 !important; /* Hover color for nav links */
+  }
+  
+  /* Header styles */
+  header {
+    margin-top: 7rem; /* Space between navbar and header */
+    text-align: center;
+  }
+  
+  .header-img {
+    max-width: 100%;
+    height: auto;
+  }
+  
+  /* Section styles */
+  h1 {
+    color: #6ab806; /* Heading color */
+  }
+  
+  .paragraphs, 
+  .features-description {
+    color: #0c3446; /* Paragraph color */
+    padding-bottom: 5rem; /* Space below paragraphs */
+  }
+  
+  .btn {
+    padding: 1rem 3rem; /* Button padding */
+    font-size: 1.1rem; /* Button font size */
+    margin-bottom: 3rem; /* Space below buttons */
+  }
+  
+  .btn-outline-success {
+    color: #6ab806; /* Outline button color */
+    border-color: #6ab806; /* Border color */
+  }
+  
+  .btn-outline-success:hover {
+    background-color: #6ab806; /* Background on hover */
+    color: #fdfff9; /* Text color on hover */
+  }
+  
+  .btn-success {
+    background-color: #6ab806; /* Success button color */
+    border-color: #6ab806; /* Border color */
+  }
+  
+  .btn-success:hover {
+    background-color: #14be01; /* Background on hover */
+  }
+  
+  /* Icon styles */
+  .icon-img {
+    width: 20rem; /* Icon width */
+    height: 15rem; /* Icon height */
+    object-fit: cover; /* Maintain aspect ratio */
+  }
+  
+  /* Border styles */
+  .rounded {
+    border-radius: 20px; /* Rounded corners */
+  }
+  
+  .border-secondary {
+    border: 2px solid #0c3446; /* Border color */
+  }
+  
+  /* Footer styles */
+  footer p {
+    color: #0c3446; /* Footer text color */
+  }
+  
+  /* Festivals section */
+  .festivals-gallery {
+    background-color: #0c3446; /* Background color for festivals section */
+  }
+  
+  .festivals-images {
+    position: relative;
+    width: 20rem; /* Image width */
+    height: 22rem; /* Image height */
+  }
+  
+  .festivals-images img {
+    border-radius: 10px; /* Rounded corners for images */
+    width: 100%;
+    height: 100%;
+    display: block; /* Display block for images */
+  }
+  
+  /* Overlay styles */
+  .overlay-text {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.7); /* Semi-transparent overlay */
+    color: white; /* Text color for overlay */
+    display: flex;
+    align-items: center; /* Center align text */
+    justify-content: center; /* Center align text */
+    opacity: 0; /* Hidden by default */
+    transition: opacity 0.3s ease; /* Transition for overlay visibility */
+    border-radius: 10px; /* Rounded corners for overlay */
+  }
+  
+  .festivals-images:hover .overlay-text {
+    opacity: 1; /* Show overlay on hover */
+  }
+  
+  /* Search input styles */
+  input[type=search] {
+    width: 25rem; /* Search input width */
+    height: 2.5rem; /* Search input height */
+    background-color: #bebebe; /* Background color */
+    border-radius: 25px; /* Rounded corners */
+    font-size: 14px; /* Font size */
+    padding: 14px 20px; /* Padding */
+  }
+  
