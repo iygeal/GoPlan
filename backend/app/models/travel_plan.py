@@ -31,6 +31,10 @@ class TravelPlan(BaseModel):
     user = db.relationship('User', back_populates='travel_plans')
     location = db.relationship('Location', back_populates='travel_plans')
 
+    # Relationship with Dashboard
+    dashboards = db.relationship('Dashboard', back_populates='travel_plan')
+
+
     def __repr__(self):
         """
         Returns a string representation of the travel plan instance.
