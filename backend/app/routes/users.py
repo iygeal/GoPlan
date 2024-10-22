@@ -75,7 +75,7 @@ def login_user():
 
 # GET A SINGLE USER
 @app_views.route(
-    '/users/<int:user_id>', methods=['GET'], strict_slashes=False)
+    '/users/<user_id>', methods=['GET'], strict_slashes=False)
 @jwt_required()
 def get_user(user_id):
     """Retrieve a user by ID"""
@@ -97,7 +97,7 @@ def get_users():
 
 # UPDATE USER
 @app_views.route(
-    '/users/<int:user_id>', methods=['PUT'], strict_slashes=False)
+    '/users/<user_id>', methods=['PUT'], strict_slashes=False)
 @jwt_required()
 def update_user(user_id):
     """Update user details"""
@@ -128,7 +128,7 @@ def update_user(user_id):
 
 # DELETE USER
 @app_views.route(
-    '/users/<int:user_id>', methods=['DELETE'], strict_slashes=False)
+    '/users/<user_id>', methods=['DELETE'], strict_slashes=False)
 @jwt_required()
 def delete_user(user_id):
     """Delete a user by ID"""
