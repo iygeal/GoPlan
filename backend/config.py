@@ -22,5 +22,8 @@ class Config:
     )
     SQLALCHEMY_TRACK_MODIFICATIONS = False  # Disable event system
 
+    # JWT Secret Key from .env
+    JWT_SECRET_KEY = os.getenv('JWT_SECRET_KEY')
+
 
 config = Config()

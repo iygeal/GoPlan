@@ -5,6 +5,7 @@ using SQLAlchemy and Flask-Migrate for handling database migrations.
 """
 
 from flask import Flask
+from flask_jwt_extended import JWTManager
 from app.db import db
 from config import config
 from flask_migrate import Migrate
@@ -32,6 +33,9 @@ def create_app():
 
     # Set up Flask-Migrate
     migrate = Migrate(app, db)
+
+    # Set up Flask-JWT-Extended
+    jwt = JWTManager(app)
 
     # Initialize routes and error handlers
     init_app(app)
