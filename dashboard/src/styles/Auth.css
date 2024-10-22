@@ -1,0 +1,32 @@
+body {
+    background-color: #f1f1f1eb; /* Adjust as needed */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh; /* Full height of the viewport */
+    margin: 0;
+  }
+  
+  .auth-container {
+    background-color: white; /* Background color for the form */
+    padding: 2rem; /* Add padding around the form */
+    border-radius: 10px; /* Rounded corners */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+    width: 140%; /* Responsive width */
+    max-width: 400px; /* Maximum width for larger screens */
+  }
+  
+  h2 {
+    text-align: center;
+    margin-bottom: 1rem; /* Space below the heading */
+  }
+  
+  .btn-block {
+    width: 100%; /* Full width for buttons */
+  }
+  
+  .link {
+    color: #6ab806; /* Link color */
+    cursor: pointer; /* Pointer cursor for links */
+  }
+  

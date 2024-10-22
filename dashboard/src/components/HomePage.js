@@ -4,11 +4,14 @@ import '../styles/Homepage.css';
 import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
+import { useNavigate } from 'react-router-dom';
 
 const HomePage = () => {
+  const navigate = useNavigate(); // Hook to navigate between pages
+
   return (
     <div>
-      <Navbar bg="light" expand="lg">
+      <Navbar bg="light">
         <Container>
           <Navbar.Brand href="#home">
             <img src="/assets/images/goplanlogo.png" className="logo" alt="Goplanlogo" />
@@ -20,20 +23,22 @@ const HomePage = () => {
               <Nav.Link href="#features">Features</Nav.Link>
               <Nav.Link href="#most-visited-places">Most Visited Places</Nav.Link>
               <Nav.Link href="#festivals">Festivals</Nav.Link>
+              <Nav.Link onClick={() => navigate("/login")}>Login</Nav.Link>
+              <Nav.Link onClick={() => navigate("/signup")}>Sign Up</Nav.Link>
             </Nav>
           </Navbar.Collapse>
         </Container>
       </Navbar>
 
-      <header className="text-center py-5 mt-5">
+      <header className="text-center">
         <div className="container">
           <h1>Discover Nigeria Like Never Before</h1>
           <p>
             GoTravel aims to simplify the process of planning vacations by offering an easy-to-use platform for searching, organizing, and managing travel plans.
           </p>
-          <div className="d-flex justify-content-center gap-4 mt-4">
-            <button className="btn btn-outline-success">Login</button>
-            <button className="btn btn-success">Sign Up</button>
+          <div className="button-container">
+            <button className="btn btn-outline-success" onClick={() => navigate("/login")}>Login</button>
+            <button className="btn btn-success" onClick={() => navigate("/signup")}>Sign Up</button>
           </div>
         </div>
         <img
@@ -44,7 +49,7 @@ const HomePage = () => {
       </header>
 
       <main>
-        <section id="features" className="text-center py-5 mt-5">
+        <section id="features" className="text-center py-5">
           <div className="container">
             <h1>Features</h1>
             <p>
@@ -122,7 +127,7 @@ const HomePage = () => {
         </section>
       </main>
 
-      <footer className="bg-light text-center py-3">
+      <footer className="text-center py-3">
         <p className="mt-4">Copyright © 2024. All rights reserved.</p>
       </footer>
     </div>
