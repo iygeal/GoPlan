@@ -43,10 +43,18 @@ class BaseModel(db.Model):
         """Make a dictionary representation of GoPlan model object"""
         dictionary = self.__dict__.copy()
         dictionary['__class__'] = self.__class__.__name__
-        dictionary['created_at'] = dictionary['created_at'].isoformat()
-        dictionary['updated_at'] = dictionary['updated_at'].isoformat()
+
+        # Check if 'created_at' and 'updated_at'
+        # exist and are not None before formatting
+        if dictionary.get('created_at'):
+            dictionary['created_at'] = dictionary['created_at'].isoformat()
+        if dictionary.get('updated_at'):
+            dictionary['updated_at'] = dictionary['updated_at'].isoformat()
+
+        # Remove SQLAlchemy state attribute
         if '_sa_instance_state' in dictionary:
             del dictionary['_sa_instance_state']
+
         return dictionary
 
     def __str__(self):

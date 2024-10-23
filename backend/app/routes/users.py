@@ -96,8 +96,7 @@ def get_users():
 
 
 # UPDATE USER
-@app_views.route(
-    '/users/<user_id>', methods=['PUT'], strict_slashes=False)
+@app_views.route('/users/<user_id>', methods=['PUT'], strict_slashes=False)
 @jwt_required()
 def update_user(user_id):
     """Update user details"""
@@ -109,9 +108,14 @@ def update_user(user_id):
         abort(400, description="Request must be JSON")
 
     data = request.get_json()
-    try:
-        ignore_keys = ["id", "created_at", "updated_at"]
 
+    # Check if data is not empty
+    if not data:
+        abort(400, description="No data provided")
+
+    ignore_keys = ["id", "created_at", "updated_at"]
+
+    try:
         for key, value in data.items():
             if key not in ignore_keys:
                 if key == "password":
@@ -120,10 +124,13 @@ def update_user(user_id):
                     setattr(user, key, value)
 
         user.save()
-        return jsonify(user.to_dict()), 200
+
+        # Optionally return a simplified success response
+        return jsonify({"message": "User updated successfully"}), 200
 
     except Exception as e:
         abort(500, description=str(e))
+
 
 
 # DELETE USER
