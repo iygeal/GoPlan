@@ -27,7 +27,7 @@ class Config:
 
     # JWT Access Token Expiration from .env
     JWT_ACCESS_TOKEN_EXPIRES = int(
-        os.getenv('JWT_ACCESS_TOKEN_EXPIRES', 864000))
+        os.getenv('JWT_ACCESS_TOKEN_EXPIRES', 86400))
 
 
 config = Config()
