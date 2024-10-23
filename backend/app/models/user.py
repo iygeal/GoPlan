@@ -3,10 +3,10 @@
 This module defines the User model for the GoPlan application.
 """
 
+import bcrypt
 import re
 from app.db import db
 from app.models.base_model import BaseModel
-from werkzeug.security import generate_password_hash, check_password_hash
 
 
 class User(BaseModel):
@@ -16,7 +16,6 @@ class User(BaseModel):
 
     username = db.Column(db.String(80), unique=True, nullable=False)
     email = db.Column(db.String(120), unique=True, nullable=False)
-    # Store hashed password
     password = db.Column(db.String(128), nullable=False)
     first_name = db.Column(db.String(50), nullable=False)
     last_name = db.Column(db.String(50), nullable=False)
@@ -40,10 +39,20 @@ class User(BaseModel):
         if not re.match(email_regex, self.email):
             raise ValueError(f"Invalid email format: {self.email}")
 
-    def set_password(self, raw_password):
-        """Hashes the password for secure storage."""
-        self.password = generate_password_hash(raw_password)
+    def set_password(self, password):
+        """Hash and set the user's password."""
+        self.password = bcrypt.hashpw(password.encode(
+            'utf-8'), bcrypt.gensalt()).decode('utf-8')
 
-    def check_password(self, raw_password):
-        """Verifies a password against the stored hash."""
-        return check_password_hash(self.password, raw_password)
+    def check_password(self, password):
+        """Check if the provided password matches the hashed password."""
+        return bcrypt.checkpw(
+            password.encode('utf-8'), self.password.encode('utf-8'))
+
+    def to_dict(self):
+        """Convert object to dictionary and
+        exclude sensitive fields like password.
+        """
+        user_dict = super().to_dict()
+        user_dict.pop('password', None)  # Exclude password
+        return user_dict
