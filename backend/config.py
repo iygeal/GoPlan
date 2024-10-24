@@ -22,5 +22,12 @@ class Config:
     )
     SQLALCHEMY_TRACK_MODIFICATIONS = False  # Disable event system
 
+    # JWT Secret Key from .env
+    JWT_SECRET_KEY = os.getenv('JWT_SECRET_KEY')
+
+    # JWT Access Token Expiration from .env
+    JWT_ACCESS_TOKEN_EXPIRES = int(
+        os.getenv('JWT_ACCESS_TOKEN_EXPIRES', 864000))
+
 
 config = Config()

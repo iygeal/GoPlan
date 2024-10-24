@@ -39,6 +39,20 @@ class BaseModel(db.Model):
             self.id = str(uuid4())
             self.created_at = self.updated_at = datetime.utcnow()
 
+    def to_dict(self):
+        """Make a dictionary representation of GoPlan model object"""
+        dictionary = self.__dict__.copy()
+        dictionary['__class__'] = self.__class__.__name__
+        dictionary['created_at'] = dictionary['created_at'].isoformat()
+        dictionary['updated_at'] = dictionary['updated_at'].isoformat()
+        if '_sa_instance_state' in dictionary:
+            del dictionary['_sa_instance_state']
+        return dictionary
+
+    def __str__(self):
+        """Make a string representation of the object"""
+        return f"[{self.__class__.__name__}] ({self.id}) {self.__dict__}"
+
     def save(self):
         """Save the current instance to the database."""
         self.updated_at = datetime.utcnow()
