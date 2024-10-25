@@ -14,10 +14,11 @@ class City(BaseModel):
     Represents a city with a name and an associated state. Each city can
     have multiple locations.
 
-    __tablename__ = 'cities'
         name (str): The name of the city.
         state_id (str): The ID of the associated state.
     """
+    __tablename__ = 'cities'
+
     name = db.Column(db.String(100), nullable=False)
     state_id = db.Column(db.String(60), db.ForeignKey(
         'states.id'), nullable=False)

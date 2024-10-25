@@ -16,17 +16,20 @@ class Location(BaseModel):
     __tablename__ = 'locations'
 
     name = db.Column(db.String(100), nullable=False)
-    latitude = db.Column(db.Float, nullable=False)
-    longitude = db.Column(db.Float, nullable=False)
+    latitude = db.Column(db.Float, nullable=True)
+    longitude = db.Column(db.Float, nullable=True)
     description = db.Column(db.Text, nullable=True)
-    country = db.Column(db.String(100), nullable=False)
     popular_attractions = db.Column(db.Text, nullable=True)
+    country = db.Column(db.String(100), nullable=False)
+    state_id = db.Column(db.String(60), db.ForeignKey(
+        'states.id'), nullable=False)
+    city_id = db.Column(db.String(60), db.ForeignKey(
+        'cities.id'), nullable=False)
 
     # Relationships
     travel_plans = db.relationship('TravelPlan', back_populates='location')
+    state = db.relationship('State', back_populates='locations')
+    city = db.relationship('City', back_populates='locations')
 
     def __repr__(self):
-        """
-        Returns a string representation of the location instance.
-        """
         return f'<Location {self.name}, {self.country}>'
