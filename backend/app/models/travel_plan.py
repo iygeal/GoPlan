@@ -34,9 +34,9 @@ class TravelPlan(BaseModel):
     # Relationship with Dashboard
     dashboards = db.relationship('Dashboard', back_populates='travel_plan')
 
-
     def __repr__(self):
         """
         Returns a string representation of the travel plan instance.
         """
-        return f'<TravelPlan {self.id}: {self.user.username} to {self.location.name}>'
+        return (f'<TravelPlan {self.id}: User {self.user_id} to Location '
+                f'{self.location_id}>')
