@@ -1,7 +1,7 @@
 import React from 'react';
 import { Container, Navbar, Nav } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import '../styles/homepage.css';
+import '../styles/landingpage.css';
 import { useNavigate } from 'react-router-dom';
 
 function Navigation() {

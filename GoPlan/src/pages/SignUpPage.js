@@ -25,9 +25,20 @@ const SignUpPage = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+
+    // Password validation: must contain at least one letter, one number, and one special character
+  const passwordPattern = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+  if (!passwordPattern.test(formData.password)) {
+    alert('Password must be at least 8 characters long and include at least one letter, one number, and one special character.');
+    return;
+  }
+
     // Add form validation and submission logic here
     console.log(formData);
     // Handle file upload and API submission here
+
+    // Assuming the sign-up process is successful, navigate to the HomePage
+    navigate('/home'); // Replace '/home' with the actual route to your HomePage
   };
 
   const handleLoginClick = () => {
@@ -53,6 +64,7 @@ const SignUpPage = () => {
                   value={formData.username}
                   onChange={handleInputChange}
                   placeholder="Enter your username"
+                  maxLength="25"
                   required
                 />
               </div>
@@ -66,6 +78,7 @@ const SignUpPage = () => {
                   value={formData.email}
                   onChange={handleInputChange}
                   placeholder="Enter your email"
+                  maxLength="50"
                   required
                 />
               </div>
@@ -79,6 +92,7 @@ const SignUpPage = () => {
                   value={formData.password}
                   onChange={handleInputChange}
                   placeholder="Enter your password"
+                  maxLength="20"
                   required
                 />
               </div>
@@ -92,6 +106,7 @@ const SignUpPage = () => {
                   value={formData.firstName}
                   onChange={handleInputChange}
                   placeholder="Enter your first name"
+                  maxLength="25"
                   required
                 />
               </div>
@@ -105,6 +120,7 @@ const SignUpPage = () => {
                   value={formData.lastName}
                   onChange={handleInputChange}
                   placeholder="Enter your last name"
+                  maxLength="25"
                   required
                 />
               </div>
@@ -117,7 +133,7 @@ const SignUpPage = () => {
                   name="profilePicture"
                   onChange={handleInputChange}
                   accept=".png, .jpg, .jpeg" // Accept only PNG and JPG files
-                  required // Optional: make it required if you want to enforce a profile picture upload
+                  // Optional: make it required if you want to enforce a profile picture upload
                 />
               </div>
               <div className="form-group">

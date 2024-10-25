@@ -25,6 +25,14 @@ const LoginPage = () => {
 
     // Perform login logic (API request or authentication check)
     console.log("Logging in with:", { loginValue, password });
+
+    // Example: Redirect to homepage on successful login
+    // This should be replaced with actual authentication logic
+    if (loginValue === "user@example.com" && password === "password123") {
+      navigate('/HomePage'); // Redirect to homepage
+    } else {
+      alert("Invalid login credentials.");
+    }
   };
 
   return (
@@ -42,7 +50,9 @@ const LoginPage = () => {
                   type="text"
                   className="form-control"
                   id="login"
+                  name="login"
                   placeholder="Enter email or username"
+                  maxLength="50"
                   required
                 />
               </div>
@@ -52,7 +62,9 @@ const LoginPage = () => {
                   type="password"
                   className="form-control"
                   id="password"
+                  name="password"
                   placeholder="Password"
+                  maxLength="20"
                   required
                 />
               </div>
