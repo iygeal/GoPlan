@@ -11,6 +11,8 @@ app_views = Blueprint("app_views", __name__, url_prefix="/api")
 
 from app.routes.users import *  # noqa
 from app.routes.locations import *  # noqa
+from app.routes.travel_plans import *  # noqa
+from app.routes.dashboards import *  # noqa
 
 
 def init_app(app):
