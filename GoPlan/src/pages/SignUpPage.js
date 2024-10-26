@@ -23,22 +23,53 @@ const SignUpPage = () => {
     setFormData({ ...formData, [name]: type === 'file' ? files[0] : value });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
     // Password validation: must contain at least one letter, one number, and one special character
-  const passwordPattern = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
-  if (!passwordPattern.test(formData.password)) {
-    alert('Password must be at least 8 characters long and include at least one letter, one number, and one special character.');
-    return;
-  }
+    const passwordPattern = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+    const isPasswordValid = passwordPattern.test(formData.password);
 
-    // Add form validation and submission logic here
-    console.log(formData);
-    // Handle file upload and API submission here
+    // Log the form data and password validation result
+    // console.log('Form Data:', formData);
+    // console.log('Is Password Valid:', isPasswordValid);
 
-    // Assuming the sign-up process is successful, navigate to the HomePage
-    navigate('/home'); // Replace '/home' with the actual route to your HomePage
+    if (!isPasswordValid) {
+      alert('Password must be at least 8 characters long and include at least one letter, one number, and one special character.');
+      return;
+    }
+
+    // Prepare the data to be sent to the API
+    const dataToSend = {
+      username: formData.username,
+      email: formData.email,
+      password: formData.password,
+      firstName: formData.firstName,
+      lastName: formData.lastName,
+      bio: formData.bio
+    };
+
+    try {
+      const response = await fetch('http://127.0.0.1:5000/users', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(dataToSend)
+      });
+
+      if (!response.ok) {
+        throw new Error('Network response was not ok');
+      }
+
+      const result = await response.json();
+      console.log('API Response:', result);
+
+      // Assuming the sign-up process is successful, navigate to the HomePage
+      navigate('/home'); // Replace '/home' with the actual route to your HomePage
+    } catch (error) {
+      console.error('There was a problem with the fetch operation:', error);
+    }
   };
 
   const handleLoginClick = () => {
