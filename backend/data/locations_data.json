@@ -1,0 +1,128 @@
+{
+  "states": [
+    {
+      "name": "Lagos",
+      "cities": [
+        {
+          "name": "Lagos",
+          "locations": [
+            {
+              "name": "Lekki Conservation Centre",
+              "latitude": 6.4735,
+              "longitude": 3.6052,
+              "description": "Nature reserve with canopy walkways and wildlife.",
+              "popular_attractions": "Canopy Walk, Tree Houses",
+              "country": "Nigeria"
+            },
+            {
+              "name": "Nike Art Gallery",
+              "latitude": 6.431,
+              "longitude": 3.4396,
+              "description": "One of the largest art galleries in Nigeria, featuring African art.",
+              "popular_attractions": "Art Exhibitions, Workshops",
+              "country": "Nigeria"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Imo",
+      "cities": [
+        {
+          "name": "Owerri",
+          "locations": [
+            {
+              "name": "Oguta Lake",
+              "latitude": 5.7025,
+              "longitude": 6.8083,
+              "description": "Largest natural lake in Southeastern Nigeria, known for its beauty.",
+              "popular_attractions": "Boat Rides, Lake Resort",
+              "country": "Nigeria"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Rivers",
+      "cities": [
+        {
+          "name": "Port Harcourt",
+          "locations": [
+            {
+              "name": "Port Harcourt Pleasure Park",
+              "latitude": 4.8242,
+              "longitude": 7.0311,
+              "description": "A recreational park with games and events.",
+              "popular_attractions": "Mini Golf, Restaurants",
+              "country": "Nigeria"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "FCT",
+      "cities": [
+        {
+          "name": "Abuja",
+          "locations": [
+            {
+              "name": "Aso Rock",
+              "latitude": 9.0765,
+              "longitude": 7.3986,
+              "description": "A prominent monolith and one of the city's major landmarks.",
+              "popular_attractions": "Scenic Views, Hiking",
+              "country": "Nigeria"
+            },
+            {
+              "name": "Millennium Park",
+              "latitude": 9.0768,
+              "longitude": 7.4946,
+              "description": "A large, green public park with walkways and fountains.",
+              "popular_attractions": "Nature Walks, Playgrounds",
+              "country": "Nigeria"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Akwa Ibom",
+      "cities": [
+        {
+          "name": "Uyo",
+          "locations": [
+            {
+              "name": "Ibom Plaza",
+              "latitude": 5.029,
+              "longitude": 7.9333,
+              "description": "A popular square in the heart of Uyo with shops and events.",
+              "popular_attractions": "Shopping, Public Events",
+              "country": "Nigeria"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Oyo",
+      "cities": [
+        {
+          "name": "Ibadan",
+          "locations": [
+            {
+              "name": "Agodi Gardens",
+              "latitude": 7.3989,
+              "longitude": 3.9173,
+              "description": "Gardens with a zoo, picnic spots, and water parks.",
+              "popular_attractions": "Zoo, Picnic Areas",
+              "country": "Nigeria"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

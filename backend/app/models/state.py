@@ -22,6 +22,7 @@ class State(BaseModel):
 
     # Relationships
     cities = db.relationship('City', back_populates='state')
+    locations = db.relationship('Location', back_populates='state')
 
     def __repr__(self):
         return f'<State {self.name}>'
