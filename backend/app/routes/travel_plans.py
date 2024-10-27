@@ -31,6 +31,12 @@ def create_travel_plan():
     if not REQUIRED_FIELDS.issubset(data):
         return jsonify({"error": "Missing required field(s)"}), 400
 
+    # Check for any unexpected keys
+    unexpected_keys = set(data) - ALLOWED_KEYS
+    if unexpected_keys:
+        return jsonify({"error": "Unexpected field(s): {}".format(
+            ", ".join(unexpected_keys))}), 400
+
     location = Location.query.get(data["location_id"])
     if not location:
         return jsonify({"error": "Location not found"}), 404
@@ -42,8 +48,9 @@ def create_travel_plan():
             if key in ALLOWED_KEYS:
                 setattr(travel_plan, key, value)
         travel_plan.save()
-    except AttributeError:
-        return jsonify({"error": "Invalid attribute(s) provided"}), 400
+    except Exception:
+        return jsonify(
+            {"error": "An error occurred while saving the travel plan"}), 400
 
     return jsonify(travel_plan.to_dict()), 201
 
