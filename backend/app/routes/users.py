@@ -6,6 +6,7 @@ and deleting users.
 """
 
 from flask import jsonify, request, abort
+from flasgger.utils import swag_from
 from app.models.user import User
 from app import db
 from flask_jwt_extended import create_access_token, jwt_required
@@ -14,6 +15,7 @@ from app.routes import app_views
 
 # REGISTER USER
 @app_views.route('/users', methods=['POST'], strict_slashes=False)
+@swag_from('../../docs/users/register_user.yaml')
 def register_user():
     """Register a new user"""
     if not request.is_json:
@@ -130,7 +132,6 @@ def update_user(user_id):
 
     except Exception as e:
         abort(500, description=str(e))
-
 
 
 # DELETE USER

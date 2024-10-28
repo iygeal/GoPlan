@@ -1,0 +1,182 @@
+swagger: "2.0"
+info:
+  title: GoPlan User API
+  description: API for registering a new user
+  version: "1.0.0"
+basePath: /api # Adjust if you're using a different base path
+schemes:
+  - http
+paths:
+  /users:
+    post:
+      tags:
+        - User
+      summary: Register a new user
+      description: Creates a new user in the GoPlan application.
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - in: body
+          name: body
+          description: User registration data
+          required: true
+          schema:
+            type: object
+            properties:
+              email:
+                type: string
+                example: "user@example.com"
+              password:
+                type: string
+                format: password
+                example: "password123"
+              username:
+                type: string
+                example: "username"
+      responses:
+        201:
+          description: User created successfully
+          schema:
+            type: object
+            properties:
+              success:
+                type: boolean
+                example: true
+              access_token:
+                type: string
+                example: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
+              user:
+                type: object
+                properties:
+                  id:
+                    type: string
+                    example: "abc123-uuid"
+                  email:
+                    type: string
+                    example: "user@example.com"
+                  username:
+                    type: string
+                    example: "username"
+        400:
+          description: Bad request, missing fields or invalid JSON
+          schema:
+            type: object
+            properties:
+              message:
+                type: string
+                example: "Missing field(s): email, password"
+        500:
+          description: Server error
+          schema:
+            type: object
+            properties:
+              message:
+                type: string
+                example: "Internal server error"
+# register_user.yaml
+
+summary: Register a new user
+description: Register a new user by providing an email, password, and username.
+operationId: registerUser
+tags:
+  - Users
+
+requestBody:
+  required: true
+  content:
+    application/json:
+      schema:
+        type: object
+        properties:
+          email:
+            type: string
+            format: email
+            example: "user@example.com"
+          password:
+            type: string
+            format: password
+            example: "password123"
+          username:
+            type: string
+            example: "user123"
+      required:
+        - email
+        - password
+        - username
+
+responses:
+  201:
+    description: User created successfully
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+            success:
+              type: boolean
+              example: true
+            access_token:
+              type: string
+              example: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
+            user:
+              type: object
+              properties:
+                id:
+                  type: integer
+                  example: 1
+                email:
+                  type: string
+                  example: "user@example.com"
+                username:
+                  type: string
+                  example: "user123"
+                created_at:
+                  type: string
+                  format: date-time
+                  example: "2024-10-28T12:34:56"
+                updated_at:
+                  type: string
+                  format: date-time
+                  example: "2024-10-28T12:34:56"
+
+  400:
+    description: Bad Request - Missing fields or invalid JSON
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+            success:
+              type: boolean
+              example: false
+            error:
+              type: object
+              properties:
+                code:
+                  type: integer
+                  example: 400
+                message:
+                  type: string
+                  example: "Missing field(s): email, username"
+
+  500:
+    description: Server Error - Unexpected error occurred
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+            success:
+              type: boolean
+              example: false
+            error:
+              type: object
+              properties:
+                code:
+                  type: integer
+                  example: 500
+                message:
+                  type: string
+                  example: "Internal server error"

@@ -5,6 +5,7 @@ using SQLAlchemy and Flask-Migrate for handling database migrations.
 """
 
 from flask import Flask
+from flasgger import Swagger
 from flask_cors import CORS
 from flask_jwt_extended import JWTManager
 from app.db import db
@@ -45,5 +46,7 @@ def create_app():
 
     # Initialize routes and error handlers
     init_app(app)
+
+    swagger = Swagger(app)
 
     return app
