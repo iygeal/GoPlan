@@ -5,6 +5,7 @@ using SQLAlchemy and Flask-Migrate for handling database migrations.
 """
 
 from flask import Flask
+from flask_cors import CORS
 from flask_jwt_extended import JWTManager
 from app.db import db
 from config import config
@@ -26,6 +27,9 @@ from app.routes import init_app
 def create_app():
     """Create and configure the Flask app."""
     app = Flask(__name__)
+
+    # Enable CORS for all routes and origins (for development)
+    CORS(app, resources={r"/api/*": {"origins": "*"}})
 
     # Configure the app with settings from the config instance
     app.config.from_object(config)
