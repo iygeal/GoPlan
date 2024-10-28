@@ -1,76 +1,75 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import '../styles/auth.css'; // Ensure this path is correct
+import '../styles/auth.css';
 import { useNavigate } from 'react-router-dom';
 import Navigation from '../components/Navigation';
 
 const SignUpPage = () => {
-  const navigate = useNavigate(); // Initialize useNavigate
+  const navigate = useNavigate();
   const [formData, setFormData] = useState({
     username: '',
     email: '',
     password: '',
     firstName: '',
     lastName: '',
-    profilePicture: null, // Change to null for file input
     bio: ''
   });
+  const [shouldSubmit, setShouldSubmit] = useState(false);
 
   const handleInputChange = (e) => {
-    const { name, value, type, files } = e.target;
-
-    // If the input is of type file, set the file instead of the value
-    setFormData({ ...formData, [name]: type === 'file' ? files[0] : value });
+    const { name, value } = e.target;
+    setFormData({ ...formData, [name]: value });
   };
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
-
-    // Password validation: must contain at least one letter, one number, and one special character
     const passwordPattern = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
-    const isPasswordValid = passwordPattern.test(formData.password);
-
-    // Log the form data and password validation result
-    // console.log('Form Data:', formData);
-    // console.log('Is Password Valid:', isPasswordValid);
-
-    if (!isPasswordValid) {
+    if (!passwordPattern.test(formData.password)) {
       alert('Password must be at least 8 characters long and include at least one letter, one number, and one special character.');
       return;
     }
+    setShouldSubmit(true);
+  };
 
-    // Prepare the data to be sent to the API
-    const dataToSend = {
-      username: formData.username,
-      email: formData.email,
-      password: formData.password,
-      firstName: formData.firstName,
-      lastName: formData.lastName,
-      bio: formData.bio
+  useEffect(() => {
+    const submitFormData = async () => {
+      // Prepare the data without profile picture for JSON-only submission
+      const dataToSend = {
+        username: formData.username,
+        email: formData.email,
+        password: formData.password,
+        first_name: formData.firstName,
+        last_name: formData.lastName,
+        bio: formData.bio
+      };
+
+      try {
+        const response = await fetch('http://localhost:5000/api/users', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(dataToSend)
+        });
+
+        if (!response.ok) {
+          const errorMessage = await response.text();
+          throw new Error(`Network response was not ok: ${errorMessage}`);
+        }
+
+        const result = await response.json();
+        console.log('API Response:', result);
+        navigate('/home'); // Redirect to HomePage after successful registration
+      } catch (error) {
+        console.error('There was a problem with the fetch operation:', error);
+      }
     };
 
-    try {
-      const response = await fetch('http://127.0.0.1:5000/users', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(dataToSend)
-      });
-
-      if (!response.ok) {
-        throw new Error('Network response was not ok');
-      }
-
-      const result = await response.json();
-      console.log('API Response:', result);
-
-      // Assuming the sign-up process is successful, navigate to the HomePage
-      navigate('/home'); // Replace '/home' with the actual route to your HomePage
-    } catch (error) {
-      console.error('There was a problem with the fetch operation:', error);
+    if (shouldSubmit) {
+      submitFormData();
+      setShouldSubmit(false);
     }
-  };
+  }, [shouldSubmit, formData, navigate]);
 
   const handleLoginClick = () => {
     navigate('/login');
@@ -138,7 +137,6 @@ const SignUpPage = () => {
                   onChange={handleInputChange}
                   placeholder="Enter your first name"
                   maxLength="25"
-                  required
                 />
               </div>
               <div className="form-group">
@@ -152,19 +150,6 @@ const SignUpPage = () => {
                   onChange={handleInputChange}
                   placeholder="Enter your last name"
                   maxLength="25"
-                  required
-                />
-              </div>
-              <div className="form-group">
-                <label htmlFor="profilePicture">Profile Picture</label>
-                <input
-                  type="file"
-                  className="form-control"
-                  id="profilePicture"
-                  name="profilePicture"
-                  onChange={handleInputChange}
-                  accept=".png, .jpg, .jpeg" // Accept only PNG and JPG files
-                  // Optional: make it required if you want to enforce a profile picture upload
                 />
               </div>
               <div className="form-group">

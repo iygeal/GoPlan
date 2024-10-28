@@ -1,0 +1,46 @@
+.homepage {
+    min-height: 100vh;
+    background-color: #f9f9f9;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+  
+  header {
+    width: 100%;
+    background-color: #fff;
+  }
+  
+  .logo {
+    width: 120px;
+  }
+  
+  .profile-icon img {
+    width: 30px;
+    cursor: pointer;
+  }
+  
+  main {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .homepage-form {
+    width: 100%;
+    max-width: 400px;
+  }
+  
+  .homepageform .form-control {
+    border-radius: 5px;
+    padding: 10px;
+  }
+  
+  .btn-block {
+    width: 100%;
+    padding: 10px;
+    border-radius: 5px;
+    font-size: 18px;
+  }
+  

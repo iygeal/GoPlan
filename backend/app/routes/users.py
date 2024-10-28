@@ -46,7 +46,9 @@ def register_user():
         }), 201
 
     except Exception as e:
-        abort(500, description=str(e))
+        # Log the error message for debugging
+        print(f"Error during user registration: {e}")  # Log the error
+        abort(500, description="An error occurred while registering the user.")
 
 
 # LOGIN USER
@@ -123,7 +125,9 @@ def update_user(user_id):
         return jsonify(user.to_dict()), 200
 
     except Exception as e:
-        abort(500, description=str(e))
+        # Log the error message for debugging
+        print(f"Error during user update: {e}")  # Log the error
+        abort(500, description="An error occurred while updating the user.")
 
 
 # DELETE USER

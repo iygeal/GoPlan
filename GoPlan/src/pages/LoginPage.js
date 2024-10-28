@@ -1,49 +1,68 @@
-import React from 'react';
+import React, { useState } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import '../styles/auth.css'; // Ensure this path is correct
-import { useNavigate } from 'react-router-dom'; // Import useNavigate
-import Navigation from '../components/Navigation'; // Import Navigation component
+import '../styles/auth.css';
+import { useNavigate } from 'react-router-dom';
+import Navigation from '../components/Navigation';
 
 const LoginPage = () => {
-  const navigate = useNavigate(); // Initialize useNavigate
+  const navigate = useNavigate();
+  const [error, setError] = useState(null);
 
   const handleSignUpClick = () => {
-    navigate('/signup'); // Navigate to Sign Up page
+    navigate('/signup');
   };
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
     const loginValue = event.target.elements.login.value;
     const password = event.target.elements.password.value;
 
-    // Add form validation and API call logic here
-    // Example: Validate login value as either email or username
     if (!loginValue || !password) {
       alert("Please enter both login credentials and password.");
       return;
     }
 
-    // Perform login logic (API request or authentication check)
-    console.log("Logging in with:", { loginValue, password });
+    try {
+      const response = await fetch('http://localhost:5000/api/login', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          email: loginValue.includes('@') ? loginValue : null, // Check if it's an email
+          username: !loginValue.includes('@') ? loginValue : null, // Otherwise treat it as username
+          password: password
+        })
+      });
 
-    // Example: Redirect to homepage on successful login
-    // This should be replaced with actual authentication logic
-    if (loginValue === "user@example.com" && password === "password123") {
-      navigate('/HomePage'); // Redirect to homepage
-    } else {
-      alert("Invalid login credentials.");
+      if (!response.ok) {
+        const errorMessage = await response.text();
+        throw new Error(errorMessage || "Invalid login credentials.");
+      }
+
+      const result = await response.json();
+      console.log('Login successful:', result);
+
+      // Save access token if needed (in localStorage/sessionStorage for persistence)
+      localStorage.setItem('access_token', result.access_token);
+
+      navigate('/home'); // Redirect to homepage upon successful login
+    } catch (error) {
+      console.error("Login error:", error);
+      setError("Invalid login credentials. Please try again.");
     }
   };
 
   return (
     <div>
-      <Navigation /> {/* Include Navigation component */}
+      <Navigation />
 
       <div className="container mt-5">
         <div className="row justify-content-center">
           <div className="col-12 col-md-8 col-lg-6">
             <form className="auth-container" onSubmit={handleSubmit}>
               <h2>Login</h2>
+              {error && <div className="alert alert-danger">{error}</div>}
               <div className="form-group">
                 <label htmlFor="login">Email or Username</label>
                 <input
