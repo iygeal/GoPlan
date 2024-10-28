@@ -7,6 +7,7 @@ from flask import request, jsonify
 from flask_jwt_extended import jwt_required, get_jwt_identity
 from app.models.travel_plan import TravelPlan
 from app.models.location import Location
+from app.models.dashboard import Dashboard
 from app.routes import app_views
 
 # Allowed keys for travel plan attributes
@@ -48,6 +49,9 @@ def create_travel_plan():
             if key in ALLOWED_KEYS:
                 setattr(travel_plan, key, value)
         travel_plan.save()
+        dashboard_entry = Dashboard(
+            user_id=user_id, travel_plan_id=travel_plan.id)
+        dashboard_entry.save()
     except Exception:
         return jsonify(
             {"error": "An error occurred while saving the travel plan"}), 400
@@ -104,6 +108,9 @@ def update_travel_plan(plan_id):
             if key in ALLOWED_KEYS:
                 setattr(travel_plan, key, value)
         travel_plan.save()
+        dashboard_entry = Dashboard(
+            user_id=user_id, travel_plan_id=travel_plan.id)
+        dashboard_entry.save()
     except AttributeError:
         return jsonify({"error": "Invalid attribute(s) provided"}), 400
 
@@ -126,5 +133,11 @@ def delete_travel_plan(plan_id):
         return jsonify({"error": "Travel plan not found"}), 404
 
     travel_plan.delete()
+    # Remove corresponding entry from the dashboard
+    dashboard_entry = Dashboard.query.filter_by(
+        user_id=user_id, travel_plan_id=plan_id
+    ).first()
+    if dashboard_entry:
+        dashboard_entry.delete()
 
     return jsonify({"message": "Travel plan deleted successfully"}), 200

@@ -1,44 +1,44 @@
 #!/usr/bin/env python3
-"""Dashboard routes to get a user's travel plans"""
-from flask import jsonify, abort, request
-from app.models.user import User
+"""
+This module defines the dashboard routes for the GoPlan application.
+"""
+
+from flask import jsonify
+from flask_jwt_extended import jwt_required, get_jwt_identity
 from app.models.dashboard import Dashboard
 from app.models.travel_plan import TravelPlan
 from app.routes import app_views
-from flask_jwt_extended import jwt_required
-
-# GET DASHBOARD (Retrieve user's travel plans)
 
 
-@app_views.route(
-    '/dashboard/<user_id>', methods=['GET'], strict_slashes=False)
+@app_views.route("/dashboard", methods=["GET"], strict_slashes=False)
 @jwt_required()
-def get_dashboard(user_id):
-    """Fetch all travel plans for a given user"""
-    # Get user by ID
-    user = User.query.get(user_id)
-    if not user:
-        abort(404, description="User not found")
+def get_dashboard():
+    """
+    Retrieve all travel plans for the logged-in user's dashboard.
+    """
+    user_id = get_jwt_identity()
+    dashboard_entries = Dashboard.query.filter_by(user_id=user_id).all()
+    travel_plans = [entry.travel_plan.to_dict() for entry in dashboard_entries]
+    return jsonify(travel_plans), 200
 
-    try:
-        # Fetch all dashboard entries (travel plans linked to the user)
-        dashboard_entries = Dashboard.query.filter_by(user_id=user_id).all()
 
-        if not dashboard_entries:
-            return jsonify(
-                {"message": "No travel plans found for this user"}), 200
+@app_views.route("/dashboard/<string:plan_id>", methods=[
+    "DELETE"], strict_slashes=False)
+@jwt_required()
+def delete_dashboard_entry(plan_id):
+    """
+    Delete a specific travel plan from the user's dashboard.
+    """
+    user_id = get_jwt_identity()
+    dashboard_entry = Dashboard.query.filter_by(
+        travel_plan_id=plan_id, user_id=user_id
+    ).first()
 
-        # Collect travel plan details
-        travel_plans_list = []
-        for entry in dashboard_entries:
-            travel_plan = entry.travel_plan
-            travel_plans_list.append(travel_plan.to_dict())
+    if not dashboard_entry:
+        return jsonify({"error": "Dashboard entry not found"}), 404
 
-        # Return JSON response
-        return jsonify({
-            "user_id": user_id,
-            "travel_plans": travel_plans_list
-        }), 200
+    # Remove associated travel plan and dashboard entry
+    dashboard_entry.travel_plan.delete()
+    dashboard_entry.delete()
 
-    except Exception as e:
-        abort(500, description=str(e))
+    return jsonify({"message": "Travel plan deleted from dashboard"}), 200
