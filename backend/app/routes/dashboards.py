@@ -37,8 +37,14 @@ def delete_dashboard_entry(plan_id):
     if not dashboard_entry:
         return jsonify({"error": "Dashboard entry not found"}), 404
 
-    # Remove associated travel plan and dashboard entry
-    dashboard_entry.travel_plan.delete()
+    # Retrieve the associated travel plan separately
+    travel_plan = TravelPlan.query.get(plan_id)
+
+    # Delete the dashboard entry first
     dashboard_entry.delete()
+
+    # Then delete the associated travel plan
+    if travel_plan:
+        travel_plan.delete()
 
     return jsonify({"message": "Travel plan deleted from dashboard"}), 200
