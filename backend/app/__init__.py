@@ -47,6 +47,6 @@ def create_app():
     # Initialize routes and error handlers
     init_app(app)
 
-    swagger = Swagger(app)
+    Swagger(app)
 
     return app

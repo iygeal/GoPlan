@@ -22,7 +22,8 @@ def register_user():
         abort(400, description="Request must be JSON")
 
     data = request.get_json()
-    required_fields = ['email', 'password', 'username']
+    required_fields = [
+        'email', 'password', 'username', 'first_name', 'last_name']
     missing_fields = [
         field for field in required_fields if not data.get(field)]
 
