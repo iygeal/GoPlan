@@ -19,8 +19,9 @@ class TravelPlan(BaseModel):
 
     user_id = db.Column(db.String(60), db.ForeignKey(
         'users.id'), nullable=False)
-    location_id = db.Column(db.String(60), db.ForeignKey(
-        'locations.id'), nullable=False)
+    title = db.Column(db.String(100), nullable=False)
+    state = db.Column(db.String(60), nullable=False)
+    city = db.Column(db.String(60), nullable=False)
     start_date = db.Column(db.Date, nullable=False)
     end_date = db.Column(db.Date, nullable=False)
     activities = db.Column(db.Text, nullable=True)
@@ -29,7 +30,6 @@ class TravelPlan(BaseModel):
 
     # Relationships
     user = db.relationship('User', back_populates='travel_plans')
-    location = db.relationship('Location', back_populates='travel_plans')
 
     # Relationship with Dashboard
     dashboards = db.relationship('Dashboard', back_populates='travel_plan')
@@ -38,5 +38,5 @@ class TravelPlan(BaseModel):
         """
         Returns a string representation of the travel plan instance.
         """
-        return (f'<TravelPlan {self.id}: User {self.user_id} to Location '
-                f'{self.location_id}>')
+        return (f'<TravelPlan {self.id}: User {self.user_id} - '
+                f'Title {self.title}, Destination {self.city}, {self.state}>')
