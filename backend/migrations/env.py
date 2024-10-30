@@ -2,24 +2,16 @@ import logging
 from logging.config import fileConfig
 
 from flask import current_app
-from alembic import context
-from app import create_app
-from config import config
 
-# Create the Flask app instance
-app = create_app()
+from alembic import context
 
 # this is the Alembic Config object, which provides
 # access to the values within the .ini file in use.
-alembic_config = context.config
-
-# Set the SQLAlchemy URL from config
-alembic_config.set_main_option(
-    'sqlalchemy.url', config.SQLALCHEMY_DATABASE_URI)
+config = context.config
 
 # Interpret the config file for Python logging.
 # This line sets up loggers basically.
-fileConfig(alembic_config.config_file_name)
+fileConfig(config.config_file_name)
 logger = logging.getLogger('alembic.env')
 
 
@@ -44,7 +36,13 @@ def get_engine_url():
 # for 'autogenerate' support
 # from myapp import mymodel
 # target_metadata = mymodel.Base.metadata
+config.set_main_option('sqlalchemy.url', get_engine_url())
 target_db = current_app.extensions['migrate'].db
+
+# other values from the config, defined by the needs of env.py,
+# can be acquired:
+# my_important_option = config.get_main_option("my_important_option")
+# ... etc.
 
 
 def get_metadata():
@@ -58,13 +56,14 @@ def run_migrations_offline():
 
     This configures the context with just a URL
     and not an Engine, though an Engine is acceptable
-    here as well. By skipping the Engine creation
+    here as well.  By skipping the Engine creation
     we don't even need a DBAPI to be available.
 
     Calls to context.execute() here emit the given string to the
     script output.
+
     """
-    url = alembic_config.get_main_option("sqlalchemy.url")
+    url = config.get_main_option("sqlalchemy.url")
     context.configure(
         url=url, target_metadata=get_metadata(), literal_binds=True
     )
@@ -78,13 +77,14 @@ def run_migrations_online():
 
     In this scenario we need to create an Engine
     and associate a connection with the context.
+
     """
 
     # this callback is used to prevent an auto-migration from being generated
     # when there are no changes to the schema
     # reference: http://alembic.zzzcomputing.com/en/latest/cookbook.html
     def process_revision_directives(context, revision, directives):
-        if getattr(alembic_config.cmd_opts, 'autogenerate', False):
+        if getattr(config.cmd_opts, 'autogenerate', False):
             script = directives[0]
             if script.upgrade_ops.is_empty():
                 directives[:] = []

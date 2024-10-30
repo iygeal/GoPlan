@@ -1,0 +1,58 @@
+summary: "Log in a user"
+description: "Authenticate a user by providing email or username and password to receive an access token."
+consumes:
+  - application/json
+parameters:
+  - in: body
+    name: body
+    description: "Login credentials for user authentication"
+    required: true
+    schema:
+      type: object
+      properties:
+        email:
+          type: string
+          example: "user@example.com"
+          description: "User's email address. Either email or username is required."
+        password:
+          type: string
+          example: "securepassword123"
+          description: "User's password"
+      required:
+        - password
+responses:
+  "200":
+    description: "User authenticated successfully. Returns an access token."
+    schema:
+      type: object
+      properties:
+        success:
+          type: boolean
+          example: true
+        access_token:
+          type: string
+          example: "your_jwt_token_here"
+        user:
+          type: object
+          properties:
+            id:
+              type: string
+              example: "550e8400-e29b-41d4-a716-446655440000"
+            email:
+              type: string
+              example: "user@example.com"
+            username:
+              type: string
+              example: "user123"
+            first_name:
+              type: string
+              example: "John"
+            last_name:
+              type: string
+              example: "Doe"
+  "400":
+    description: "Invalid request format. Request body must be JSON."
+  "401":
+    description: "Unauthorized. Invalid credentials provided."
+  "500":
+    description: "Internal server error."
