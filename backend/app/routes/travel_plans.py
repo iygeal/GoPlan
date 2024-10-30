@@ -6,14 +6,13 @@ This module defines the travel plan routes for the GoPlan application.
 from flask import request, jsonify
 from flask_jwt_extended import jwt_required, get_jwt_identity
 from app.models.travel_plan import TravelPlan
-from app.models.location import Location
 from app.models.dashboard import Dashboard
 from app.routes import app_views
 
 # Allowed keys for travel plan attributes
-ALLOWED_KEYS = {"location_id", "start_date", "end_date",
+ALLOWED_KEYS = {"title", "state", "city", "start_date", "end_date",
                 "activities", "budget", "accommodation_details"}
-REQUIRED_FIELDS = {"location_id", "start_date", "end_date"}
+REQUIRED_FIELDS = {"title", "state", "city", "start_date", "end_date"}
 
 
 @app_views.route("/travel-plans", methods=["POST"], strict_slashes=False)
@@ -35,12 +34,9 @@ def create_travel_plan():
     # Check for any unexpected keys
     unexpected_keys = set(data) - ALLOWED_KEYS
     if unexpected_keys:
-        return jsonify({"error": "Unexpected field(s): {}".format(
-            ", ".join(unexpected_keys))}), 400
-
-    location = Location.query.get(data["location_id"])
-    if not location:
-        return jsonify({"error": "Location not found"}), 404
+        return jsonify({
+            "error": f"Unexpected field(s): {', '.join(unexpected_keys)}"
+        }), 400
 
     # Initialize and save the new travel plan
     travel_plan = TravelPlan(user_id=user_id)
@@ -49,6 +45,8 @@ def create_travel_plan():
             if key in ALLOWED_KEYS:
                 setattr(travel_plan, key, value)
         travel_plan.save()
+
+        # Link to Dashboard
         dashboard_entry = Dashboard(
             user_id=user_id, travel_plan_id=travel_plan.id)
         dashboard_entry.save()
@@ -68,15 +66,14 @@ def get_travel_plans():
     return jsonify([plan.to_dict() for plan in travel_plans]), 200
 
 
-@app_views.route(
-    "/travel-plans/<string:plan_id>", methods=["GET"], strict_slashes=False)
+@app_views.route("/travel-plans/<string:plan_id>", methods=[
+    "GET"], strict_slashes=False)
 @jwt_required()
 def get_travel_plan(plan_id):
     """Retrieve a specific travel plan by ID."""
     user_id = get_jwt_identity()
     travel_plan = TravelPlan.query.filter_by(
-        id=plan_id, user_id=user_id
-    ).first()
+        id=plan_id, user_id=user_id).first()
 
     if not travel_plan:
         return jsonify({"error": "Travel plan not found"}), 404
@@ -84,8 +81,8 @@ def get_travel_plan(plan_id):
     return jsonify(travel_plan.to_dict()), 200
 
 
-@app_views.route(
-    "/travel-plans/<string:plan_id>", methods=["PUT"], strict_slashes=False)
+@app_views.route("/travel-plans/<string:plan_id>", methods=[
+    "PUT"], strict_slashes=False)
 @jwt_required()
 def update_travel_plan(plan_id):
     """
@@ -96,8 +93,7 @@ def update_travel_plan(plan_id):
 
     user_id = get_jwt_identity()
     travel_plan = TravelPlan.query.filter_by(
-        id=plan_id, user_id=user_id
-    ).first()
+        id=plan_id, user_id=user_id).first()
 
     if not travel_plan:
         return jsonify({"error": "Travel plan not found"}), 404
@@ -108,9 +104,6 @@ def update_travel_plan(plan_id):
             if key in ALLOWED_KEYS:
                 setattr(travel_plan, key, value)
         travel_plan.save()
-        dashboard_entry = Dashboard(
-            user_id=user_id, travel_plan_id=travel_plan.id)
-        dashboard_entry.save()
     except AttributeError:
         return jsonify({"error": "Invalid attribute(s) provided"}), 400
 
@@ -126,17 +119,16 @@ def delete_travel_plan(plan_id):
     """
     user_id = get_jwt_identity()
     travel_plan = TravelPlan.query.filter_by(
-        id=plan_id, user_id=user_id
-    ).first()
+        id=plan_id, user_id=user_id).first()
 
     if not travel_plan:
         return jsonify({"error": "Travel plan not found"}), 404
 
     travel_plan.delete()
+
     # Remove corresponding entry from the dashboard
     dashboard_entry = Dashboard.query.filter_by(
-        user_id=user_id, travel_plan_id=plan_id
-    ).first()
+        user_id=user_id, travel_plan_id=plan_id).first()
     if dashboard_entry:
         dashboard_entry.delete()
 
