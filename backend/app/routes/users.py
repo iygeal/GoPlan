@@ -54,6 +54,7 @@ def register_user():
 
 # LOGIN USER
 @app_views.route('/login', methods=['POST'], strict_slashes=False)
+@swag_from('../../docs/users/login_user.yaml')
 def login_user():
     """Log in a user"""
     if not request.is_json:
@@ -80,6 +81,7 @@ def login_user():
 @app_views.route(
     '/users/<user_id>', methods=['GET'], strict_slashes=False)
 @jwt_required()
+@swag_from('../../docs/users/get_user.yaml')
 def get_user(user_id):
     """Retrieve a user by ID"""
     user = User.query.get(user_id)

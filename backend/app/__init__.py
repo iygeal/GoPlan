@@ -47,6 +47,44 @@ def create_app():
     # Initialize routes and error handlers
     init_app(app)
 
-    Swagger(app)
+    # Set up Swagger
+    swagger_template = {
+        "swagger": "2.0",
+        "info": {
+            "title": "GoPlan API",
+            "description": "API documentation for GoPlan",
+            "version": "1.0.0"
+        },
+        "securityDefinitions": {
+            "Bearer": {
+                "type": "apiKey",
+                "name": "Authorization",
+                "in": "header",
+                "description": "JWT Authorization header using the Bearer scheme. Example: 'Authorization: Bearer {token}'"
+            }
+        },
+        "security": [
+            {"Bearer": []}
+        ]
+    }
+
+    swagger_config = {
+        "headers": [],
+        "specs": [
+            {
+                "endpoint": 'apispec',
+                "route": '/apispec.json',
+                "rule_filter": lambda rule: True,
+                "model_filter": lambda tag: True,
+            }
+        ],
+        "static_url_path": "/flasgger_static",
+        "swagger_ui": True,
+        "specs_route": "/apidocs/"
+    }
+
+    swagger = Swagger(app, config=swagger_config, template=swagger_template)
+
+
 
     return app
