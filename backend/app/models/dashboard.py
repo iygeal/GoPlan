@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """
 This module contains the Dashboard model, which represents a user's dashboard
-by linking them to their travel plans. It inherits from the BaseModel.
+by linking them to their travel plans.
 """
 
 from app.db import db
