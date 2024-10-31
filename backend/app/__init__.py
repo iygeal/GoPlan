@@ -17,9 +17,7 @@ from app.models.user import User
 from app.models.travel_plan import TravelPlan
 from app.models.search_history import SearchHistory
 from app.models.dashboard import Dashboard
-from app.models.location import Location
-from app.models.state import State
-from app.models.city import City
+
 
 # Import the route and error handler initializer
 from app.routes import init_app
@@ -84,7 +82,5 @@ def create_app():
     }
 
     swagger = Swagger(app, config=swagger_config, template=swagger_template)
-
-
 
     return app
