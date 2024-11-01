@@ -10,6 +10,8 @@ from app.error_handlers import handle_error
 app_views = Blueprint("app_views", __name__, url_prefix="/api")
 
 from app.routes.users import *  # noqa
+from app.routes.get_stored_datas import * # noqa
+from app.routes.travel_plans import * # noqa
 
 
 def init_app(app):
