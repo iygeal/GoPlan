@@ -1,0 +1,48 @@
+summary: "Update user details"
+description: "Update a user’s information by providing their unique user ID and new details in the request body. Ensure the access token is included in the Authorization header."
+security:
+  - Bearer: []
+parameters:
+  - in: path
+    name: user_id
+    type: string
+    required: true
+    description: "The unique identifier of the user"
+    example: "550e8400-e29b-41d4-a716-446655440000"
+  - in: body
+    name: body
+    description: "Fields to update for the user"
+    required: true
+    schema:
+      type: object
+      properties:
+        email:
+          type: string
+          example: "updated_user@example.com"
+        username:
+          type: string
+          example: "updated_username"
+        first_name:
+          type: string
+          example: "Jane"
+        last_name:
+          type: string
+          example: "Smith"
+        password:
+          type: string
+          example: "newpassword123"
+responses:
+  "200":
+    description: "User updated successfully."
+    schema:
+      type: object
+      properties:
+        message:
+          type: string
+          example: "User updated successfully"
+  "400":
+    description: "Bad request. Either the request is not JSON, or no data provided."
+  "404":
+    description: "User not found."
+  "500":
+    description: "Internal server error."

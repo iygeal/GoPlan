@@ -1,0 +1,35 @@
+summary: "Retrieve all users"
+description: "Fetch a list of all registered users. Ensure the access token is added to the Authorization header."
+security:
+  - Bearer: []
+responses:
+  "200":
+    description: "List of users retrieved successfully."
+    schema:
+      type: array
+      items:
+        type: object
+        properties:
+          id:
+            type: string
+            example: "550e8400-e29b-41d4-a716-446655440000"
+          email:
+            type: string
+            example: "user@example.com"
+          username:
+            type: string
+            example: "user123"
+          first_name:
+            type: string
+            example: "John"
+          last_name:
+            type: string
+            example: "Doe"
+          created_at:
+            type: string
+            example: "2024-10-29T10:20:30Z"
+          updated_at:
+            type: string
+            example: "2024-10-29T12:45:00Z"
+  "500":
+    description: "Internal server error."
