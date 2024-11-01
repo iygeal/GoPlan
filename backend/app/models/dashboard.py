@@ -14,14 +14,7 @@ class Dashboard(BaseModel):
     __tablename__ = 'dashboards'
 
     user_id = db.Column(db.String(60), db.ForeignKey('users.id'),
-                        nullable=False)
-    travel_id = db.Column(db.String(60), db.ForeignKey('travel_plans.id'),
-                          nullable=False)
-    user = db.relationship('User', back_populates='dashboards')
+                        nullable=False, unique=True)
+    user = db.relationship('User', back_populates='dashboards',
+                           uselist=False)
     travel_plans = db.relationship('TravelPlan', back_populates='dashboard')
-
-    def __repr__(self):
-        _id = self.id
-        username = self.user.username
-        travelPlan_ids = [tp.id for tp in self.travel_plans]
-        return f'<Dashboard {_id}: User {username}, Plan {travelPlan_ids}>'

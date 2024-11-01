@@ -14,7 +14,6 @@ from flask_migrate import Migrate
 from app.models.attraction import Attraction
 from app.models.attraction_type import AttractionType
 from app.models.city import City
-#from app.models.location import Location
 from app.models.state import State
 from app.models.travel_plan import TravelPlan
 from app.models.user import User

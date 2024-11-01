@@ -1,8 +1,8 @@
-"""initial migration
+"""reload database
 
-Revision ID: c1b25283efd9
+Revision ID: df103a0a2ae7
 Revises: 
-Create Date: 2024-10-31 22:44:18.292396
+Create Date: 2024-11-01 22:54:08.291607
 
 """
 from alembic import op
@@ -10,7 +10,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision = 'c1b25283efd9'
+revision = 'df103a0a2ae7'
 down_revision = None
 branch_labels = None
 depends_on = None
@@ -52,7 +52,7 @@ def upgrade():
     )
     op.create_table('cities',
     sa.Column('name', sa.String(length=60), nullable=False),
-    sa.Column('state_id', sa.String(length=30), nullable=False),
+    sa.Column('state_id', sa.String(length=60), nullable=False),
     sa.Column('id', sa.String(length=60), nullable=False),
     sa.Column('created_at', sa.DateTime(), nullable=False),
     sa.Column('updated_at', sa.DateTime(), nullable=False),
@@ -65,11 +65,12 @@ def upgrade():
     sa.Column('created_at', sa.DateTime(), nullable=False),
     sa.Column('updated_at', sa.DateTime(), nullable=False),
     sa.ForeignKeyConstraint(['user_id'], ['users.id'], ),
-    sa.PrimaryKeyConstraint('id')
+    sa.PrimaryKeyConstraint('id'),
+    sa.UniqueConstraint('user_id')
     )
     op.create_table('attractions',
     sa.Column('name', sa.String(length=100), nullable=False),
-    sa.Column('city_id', sa.String(length=50), nullable=False),
+    sa.Column('city_id', sa.String(length=60), nullable=False),
     sa.Column('type_id', sa.String(length=50), nullable=False),
     sa.Column('id', sa.String(length=60), nullable=False),
     sa.Column('created_at', sa.DateTime(), nullable=False),
@@ -82,6 +83,7 @@ def upgrade():
     sa.Column('user_id', sa.String(length=60), nullable=False),
     sa.Column('state_id', sa.String(length=60), nullable=False),
     sa.Column('city_id', sa.String(length=60), nullable=False),
+    sa.Column('dashboard_id', sa.String(length=60), nullable=False),
     sa.Column('attraction_type_id', sa.String(length=60), nullable=False),
     sa.Column('attraction_id', sa.String(length=60), nullable=False),
     sa.Column('start_date', sa.Date(), nullable=False),
@@ -95,6 +97,7 @@ def upgrade():
     sa.ForeignKeyConstraint(['attraction_id'], ['attractions.id'], ),
     sa.ForeignKeyConstraint(['attraction_type_id'], ['attraction_types.id'], ),
     sa.ForeignKeyConstraint(['city_id'], ['cities.id'], ),
+    sa.ForeignKeyConstraint(['dashboard_id'], ['dashboards.id'], ),
     sa.ForeignKeyConstraint(['state_id'], ['states.id'], ),
     sa.ForeignKeyConstraint(['user_id'], ['users.id'], ),
     sa.PrimaryKeyConstraint('id')

@@ -14,11 +14,13 @@ class TravelPlan(BaseModel):
     user_id = db.Column(db.String(60), db.ForeignKey('users.id'),
                         nullable=False)
 
-    state_id = db.Column(db.String(1000), db.ForeignKey('states.id'),
+    state_id = db.Column(db.String(60), db.ForeignKey('states.id'),
                          nullable=False)
 
     city_id = db.Column(db.String(60), db.ForeignKey('cities.id'),
                          nullable=False)
+    dashboard_id = db.Column(db.String(60), db.ForeignKey('dashboards.id'),
+                             nullable=False)
 
     attraction_type_id = db.Column(db.String(60), db.ForeignKey('attraction_types.id'),
                                    nullable=False)

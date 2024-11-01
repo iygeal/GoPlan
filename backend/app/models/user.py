@@ -22,5 +22,5 @@ class User(BaseModel):
     bio = db.Column(db.Text, nullable=True)
 
     # Relationships
-    dashboards = db.relationship('Dashboard', back_populates='user',
-                                 cascade='all, delete-orphan')
+    dashboard = db.relationship('Dashboard', back_populates='user',
+                                 uselist=False)
