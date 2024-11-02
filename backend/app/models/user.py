@@ -6,7 +6,7 @@ contains user model that inherits from BaseModel
 from app.db import db
 from app.models.base_model import BaseModel
 import re
-
+import bcrypt
 
 class User(BaseModel):
     """User model for the application."""
