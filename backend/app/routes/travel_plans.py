@@ -4,6 +4,7 @@ This module defines the travel plan routes for the GoPlan application.
 """
 
 from flask import request, jsonify
+from flasgger.utils import swag_from
 from flask_jwt_extended import jwt_required, get_jwt_identity
 from app.models.travel_plan import TravelPlan
 from app.models.dashboard import Dashboard
@@ -17,6 +18,7 @@ REQUIRED_FIELDS = {"title", "state", "city", "start_date", "end_date"}
 
 @app_views.route("/travel-plans", methods=["POST"], strict_slashes=False)
 @jwt_required()
+@swag_from("../../docs/travel_plans/create_travel_plan.yaml")
 def create_travel_plan():
     """
     Create a new travel plan for the logged-in user.

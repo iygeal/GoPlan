@@ -11,7 +11,7 @@ parameters:
     example: "550e8400-e29b-41d4-a716-446655440000"
 responses:
   "200":
-    description: "User deleted successfully."
+    description: "User deleted successfully from GoPlan DB."
     schema:
       type: object
       properties:
