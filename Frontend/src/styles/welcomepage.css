@@ -1,0 +1,48 @@
+/* WelcomePage.css */
+.welcome-page {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    text-align: center;
+    color: #ffffff;
+    font-family: 'Arial', sans-serif;
+  }
+  
+  .welcome-content {
+    animation: fadeIn 1.5s ease;
+    max-width: 500px;
+  }
+  
+  .welcome-message {
+    font-size: 2.5em;
+    margin-bottom: 20px;
+    font-weight: bold;
+    animation: slideIn 1.2s ease-out;
+  }
+  
+  .create-plan-btn {
+    background-color: #2f89fc;
+    color: #ffffff;
+    border: none;
+    padding: 15px 30px;
+    font-size: 1.1em;
+    border-radius: 30px;
+    cursor: pointer;
+    transition: transform 0.3s ease;
+  }
+  
+  .create-plan-btn:hover {
+    transform: scale(1.05);
+  }
+  
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+  
+  @keyframes slideIn {
+    0% { transform: translateY(-50px); opacity: 0; }
+    100% { transform: translateY(0); opacity: 1; }
+  }
+  

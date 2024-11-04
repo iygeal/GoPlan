@@ -17,22 +17,29 @@ const SignUpPage = () => {
   const [shouldSubmit, setShouldSubmit] = useState(false);
   const [error, setError] = useState('');
 
+  // Handle input change and update formData state
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
   };
 
+  // Form submission handler with password validation
   const handleSubmit = (e) => {
     e.preventDefault();
     setError('');
+    
+    // Validate password strength
     const passwordPattern = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
     if (!passwordPattern.test(formData.password)) {
       alert('Password must be at least 8 characters long and include at least one letter, one number, and one special character.');
       return;
     }
+
+    // Trigger form submission
     setShouldSubmit(true);
   };
 
+  // Effect to submit formData when shouldSubmit is true
   useEffect(() => {
     const submitFormData = async () => {
       const dataToSend = {
@@ -41,7 +48,7 @@ const SignUpPage = () => {
         password: formData.password,
         first_name: formData.firstName,
         last_name: formData.lastName,
-        bio: formData.bio
+        bio: formData.bio || '' // Optional bio field
       };
 
       try {
@@ -53,6 +60,7 @@ const SignUpPage = () => {
           body: JSON.stringify(dataToSend)
         });
 
+        // Handle specific errors and responses
         if (response.status === 409) {
           setError('User with this email or username already exists.');
           return;
@@ -61,9 +69,10 @@ const SignUpPage = () => {
           throw new Error(`Network response was not ok: ${errorMessage}`);
         }
 
+        // Successful registration; navigate to login page
         const result = await response.json();
         console.log('API Response:', result);
-        navigate('/home');
+        navigate('/login');
       } catch (error) {
         console.error('There was a problem with the fetch operation:', error);
         setError('An error occurred during registration. Please try again.');
@@ -83,13 +92,14 @@ const SignUpPage = () => {
   return (
     <div>
       <Navigation />
-
       <div className="container mt-5">
         <div className="row justify-content-center">
           <div className="col-12 col-md-8 col-lg-6">
             <form className="auth-container" onSubmit={handleSubmit}>
               <h2>Sign Up</h2>
               {error && <div className="alert alert-danger">{error}</div>}
+              
+              {/* Username Input */}
               <div className="form-group">
                 <label htmlFor="username">Username</label>
                 <input
@@ -104,6 +114,8 @@ const SignUpPage = () => {
                   required
                 />
               </div>
+
+              {/* Email Input */}
               <div className="form-group">
                 <label htmlFor="email">Email address</label>
                 <input
@@ -118,6 +130,8 @@ const SignUpPage = () => {
                   required
                 />
               </div>
+
+              {/* Password Input */}
               <div className="form-group">
                 <label htmlFor="password">Password</label>
                 <input
@@ -132,6 +146,8 @@ const SignUpPage = () => {
                   required
                 />
               </div>
+
+              {/* First Name Input */}
               <div className="form-group">
                 <label htmlFor="firstName">First Name</label>
                 <input
@@ -143,8 +159,11 @@ const SignUpPage = () => {
                   onChange={handleInputChange}
                   placeholder="Enter your first name"
                   maxLength="25"
+                  required
                 />
               </div>
+
+              {/* Last Name Input */}
               <div className="form-group">
                 <label htmlFor="lastName">Last Name</label>
                 <input
@@ -156,8 +175,11 @@ const SignUpPage = () => {
                   onChange={handleInputChange}
                   placeholder="Enter your last name"
                   maxLength="25"
+                  required
                 />
               </div>
+
+              {/* Bio Input */}
               <div className="form-group">
                 <label htmlFor="bio">Bio</label>
                 <textarea
@@ -169,8 +191,12 @@ const SignUpPage = () => {
                   placeholder="Tell us about yourself (Optional)"
                 />
               </div>
+
+              {/* Submit Button */}
               <button type="submit" className="btn btn-success btn-block">Sign Up</button>
             </form>
+
+            {/* Login Link */}
             <div className="text-center mt-3">
               <p>Already have an account? <span className="link" onClick={handleLoginClick}>Login</span></p>
             </div>

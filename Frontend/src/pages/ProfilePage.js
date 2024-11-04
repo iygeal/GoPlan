@@ -7,6 +7,7 @@ const ProfilePage = () => {
     const [error, setError] = useState(null);
     const [editMode, setEditMode] = useState(false);
     const [updatedUser, setUpdatedUser] = useState({});
+    const [loadingSave, setLoadingSave] = useState(false); // State to handle loading during save
 
     useEffect(() => {
         const getProfileData = async () => {
@@ -44,23 +45,38 @@ const ProfilePage = () => {
     };
 
     const handleSaveChanges = async () => {
+        setLoadingSave(true); // Start loading state
         try {
             const token = localStorage.getItem('access_token');
             const userId = JSON.parse(atob(token.split('.')[1])).sub;
 
-            await axios.put(`http://localhost:5000/api/users/${userId}`, updatedUser, {
+            // Create a new object without unwanted keys
+            const { id, created_at, updated_at, __class__, ...filteredUser } = updatedUser; // Filter out unwanted properties
+
+            console.log("Updating user with data:", filteredUser); // Log the filtered data to be sent
+
+            const response = await axios.put(`http://localhost:5000/api/users/${userId}`, filteredUser, {
                 headers: { Authorization: `Bearer ${token}` },
             });
 
-            setUser(updatedUser);
+            console.log("Update response:", response.data); // Log the response
+
+            // Update the local user state with the new data
+            setUser(prevUser => ({ ...prevUser, ...filteredUser })); // Merge updated fields with the existing user data
             setEditMode(false);
+            setError(null); // Clear any previous error
         } catch (err) {
-            console.error("Error updating user data:", err);
+            console.error("Error updating user data:", err.response ? err.response.data : err);
             setError("Failed to update user data. Please try again.");
+        } finally {
+            setLoadingSave(false); // End loading state
         }
     };
 
     const handleDeleteAccount = async () => {
+        const confirmDelete = window.confirm("Are you sure you want to delete your account? This action cannot be undone.");
+        if (!confirmDelete) return;
+
         try {
             const token = localStorage.getItem('access_token');
             const userId = JSON.parse(atob(token.split('.')[1])).sub;
@@ -82,7 +98,7 @@ const ProfilePage = () => {
     }
 
     if (error) {
-        return <div>{error}</div>;
+        return <div className="alert alert-danger">{error}</div>; // Improved error display
     }
 
     return (
@@ -93,19 +109,36 @@ const ProfilePage = () => {
                     <h2>User Details</h2>
                     {editMode ? (
                         <>
-                            <p><strong>Username:</strong> <input type="text" name="username" value={updatedUser.username} onChange={handleInputChange} /></p>
-                            <p><strong>Email:</strong> <input type="email" name="email" value={updatedUser.email} onChange={handleInputChange} /></p>
-                            <p><strong>First Name:</strong> <input type="text" name="firstName" value={updatedUser.firstName} onChange={handleInputChange} /></p>
-                            <p><strong>Last Name:</strong> <input type="text" name="lastName" value={updatedUser.lastName} onChange={handleInputChange} /></p>
-                            <p><strong>Bio:</strong> <textarea name="bio" value={updatedUser.bio} onChange={handleInputChange}></textarea></p>
-                            <button onClick={handleSaveChanges}>Save Changes</button>
+                            <div>
+                                <strong>Username:</strong>
+                                <input type="text" name="username" value={updatedUser.username} onChange={handleInputChange} />
+                            </div>
+                            <div>
+                                <strong>Email:</strong>
+                                <input type="email" name="email" value={updatedUser.email} onChange={handleInputChange} />
+                            </div>
+                            <div>
+                                <strong>First Name:</strong>
+                                <input type="text" name="first_name" value={updatedUser.first_name} onChange={handleInputChange} />
+                            </div>
+                            <div>
+                                <strong>Last Name:</strong>
+                                <input type="text" name="last_name" value={updatedUser.last_name} onChange={handleInputChange} />
+                            </div>
+                            <div>
+                                <strong>Bio:</strong>
+                                <textarea name="bio" value={updatedUser.bio} onChange={handleInputChange}></textarea>
+                            </div>
+                            <button onClick={handleSaveChanges} disabled={loadingSave}>
+                                {loadingSave ? 'Saving...' : 'Save Changes'}
+                            </button>
                             <button onClick={handleEditToggle}>Cancel</button>
                         </>
                     ) : (
                         <>
                             <p><strong>Username:</strong> {user.username}</p>
                             <p><strong>Email:</strong> {user.email}</p>
-                            <p><strong>Full Name:</strong> {user.firstName} {user.lastName}</p>
+                            <p><strong>Full Name:</strong> {user.first_name} {user.last_name}</p>
                             <p><strong>Bio:</strong> {user.bio}</p>
                             <button onClick={handleEditToggle}>Edit Profile</button>
                             <button onClick={handleDeleteAccount}>Delete Account</button>

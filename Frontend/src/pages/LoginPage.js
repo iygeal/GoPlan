@@ -4,7 +4,7 @@ import '../styles/auth.css';
 import { useNavigate } from 'react-router-dom';
 import Navigation from '../components/Navigation';
 
-const LoginPage = () => {
+const LoginPage = ({ onLogin }) => { // Accept onLogin prop
   const navigate = useNavigate();
   const [error, setError] = useState(null);
 
@@ -43,10 +43,14 @@ const LoginPage = () => {
       const result = await response.json();
       console.log('Login successful:', result);
 
-      // Save access token if needed (in localStorage/sessionStorage for persistence)
+      // Save access token and user ID if needed
       localStorage.setItem('access_token', result.access_token);
+      localStorage.setItem('user_id', result.user.id); // Save the user ID for later use
 
-      navigate('/home'); // Redirect to the profile page upon successful login
+      // Call the onLogin function to pass user data to the parent
+      onLogin(result.user); // Pass the user data, including first name
+
+      navigate('/welcome'); // Redirect to the welcome page upon successful login
     } catch (error) {
       console.error("Login error:", error);
       setError("Invalid login credentials. Please try again.");

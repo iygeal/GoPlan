@@ -15,7 +15,7 @@ const LandingPage = () => {
         <div className="container">
           <h1>Discover Nigeria Like Never Before</h1>
           <p>
-            GoTravel aims to simplify the process of planning vacations by offering an easy-to-use platform for searching, organizing, and managing travel plans.
+            GoPlan aims to simplify the process of planning vacations by offering an easy-to-use platform for searching, organizing, and managing travel plans.
           </p>
           <div className="button-container">
             <button className="btn btn-outline-success" onClick={() => navigate("/login")}>Login</button>
