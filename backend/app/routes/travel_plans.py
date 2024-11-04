@@ -61,6 +61,7 @@ def create_travel_plan():
 
 @app_views.route("/travel-plans", methods=["GET"], strict_slashes=False)
 @jwt_required()
+@swag_from("../../docs/travel_plans/get_travel_plans.yaml")
 def get_travel_plans():
     """Retrieve all travel plans for the logged-in user."""
     user_id = get_jwt_identity()
@@ -71,6 +72,7 @@ def get_travel_plans():
 @app_views.route("/travel-plans/<string:plan_id>", methods=[
     "GET"], strict_slashes=False)
 @jwt_required()
+@swag_from("../../docs/travel_plans/get_travel_plan.yaml")
 def get_travel_plan(plan_id):
     """Retrieve a specific travel plan by ID."""
     user_id = get_jwt_identity()
@@ -86,6 +88,7 @@ def get_travel_plan(plan_id):
 @app_views.route("/travel-plans/<string:plan_id>", methods=[
     "PUT"], strict_slashes=False)
 @jwt_required()
+@swag_from("../../docs/travel_plans/update_travel_plan.yaml")
 def update_travel_plan(plan_id):
     """
     Update an existing travel plan's details for the logged-in user.
@@ -115,6 +118,7 @@ def update_travel_plan(plan_id):
 @app_views.route("/travel-plans/<string:plan_id>", methods=[
     "DELETE"], strict_slashes=False)
 @jwt_required()
+@swag_from("../../docs/travel_plans/delete_travel_plan.yaml")
 def delete_travel_plan(plan_id):
     """
     Delete a specific travel plan for the logged-in user.
@@ -126,12 +130,13 @@ def delete_travel_plan(plan_id):
     if not travel_plan:
         return jsonify({"error": "Travel plan not found"}), 404
 
-    travel_plan.delete()
-
-    # Remove corresponding entry from the dashboard
+    # First, remove the corresponding entry from the dashboard
     dashboard_entry = Dashboard.query.filter_by(
         user_id=user_id, travel_plan_id=plan_id).first()
     if dashboard_entry:
         dashboard_entry.delete()
+
+    # Now, delete the travel plan
+    travel_plan.delete()
 
     return jsonify({"message": "Travel plan deleted successfully"}), 200

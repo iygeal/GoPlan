@@ -1,0 +1,55 @@
+summary: "Retrieve a specific travel plan by ID"
+description: "Fetch a travel plan for the currently authenticated user based on the provided plan ID."
+parameters:
+  - in: path
+    name: plan_id
+    description: "ID of the travel plan to retrieve"
+    required: true
+    type: string
+  - in: header
+    name: Authorization
+    description: "JWT token for authorization. Example: Bearer <your_token>"
+    required: true
+    type: string
+responses:
+  "200":
+    description: "Successfully retrieved the travel plan"
+    schema:
+      type: object
+      properties:
+        id:
+          type: string
+          example: "123e4567-e89b-12d3-a456-426614174000"
+        user_id:
+          type: string
+          example: "550e8400-e29b-41d4-a716-446655440000"
+        title:
+          type: string
+          example: "Vacation in Lagos"
+        state:
+          type: string
+          example: "Lagos"
+        city:
+          type: string
+          example: "Ikeja"
+        start_date:
+          type: string
+          example: "2024-11-01"
+        end_date:
+          type: string
+          example: "2024-11-15"
+        activities:
+          type: string
+          example: "Sightseeing, beach outing, hiking"
+        budget:
+          type: number
+          example: 5000
+        accommodation_details:
+          type: string
+          example: "Hotel in Victoria Island"
+  "404":
+    description: "Travel plan not found"
+  "401":
+    description: "Unauthorized access - JWT token missing or invalid"
+  "500":
+    description: "Internal server error"
