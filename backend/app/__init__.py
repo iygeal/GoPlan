@@ -9,7 +9,7 @@ from flasgger import Swagger
 from flask_cors import CORS
 from flask_jwt_extended import JWTManager
 from app.db import db
-from config import config
+from config import config, test_config
 from flask_migrate import Migrate
 
 # Import all models to help with migrations
@@ -31,7 +31,7 @@ def create_app():
     CORS(app, resources={r"/api/*": {"origins": "*"}})
 
     # Configure the app with settings from the config instance
-    app.config.from_object(config)
+    app.config.from_object(config or test_config)
 
     # Initialize the database connection
     db.init_app(app)
