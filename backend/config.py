@@ -34,8 +34,8 @@ class TestConfig(Config):
     """Configuration class specifically for testing."""
     TESTING = True
     SQLALCHEMY_DATABASE_URI = "sqlite:///:memory:"  # In-memory database for testing
-    JWT_SECRET_KEY = "test_secret"  # Simplified key for test environment
-    JWT_ACCESS_TOKEN_EXPIRES = 1  # Short token expiration for testing
+    JWT_SECRET_KEY = "test_secret"
+    JWT_ACCESS_TOKEN_EXPIRES = 300
 
 
 # Export the desired configuration based on environment
