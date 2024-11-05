@@ -1,5 +1,7 @@
 summary: "Retrieve all travel plans"
 description: "Fetch all travel plans for the currently authenticated user."
+tags:
+  - Travel Plans
 parameters:
   - in: header
     name: Authorization

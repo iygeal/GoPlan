@@ -1,5 +1,7 @@
 summary: "Update an existing travel plan's details"
 description: "Modify details of a travel plan for the currently authenticated user by providing the plan ID and the updated fields."
+tags:
+  - Travel Plans
 parameters:
   - in: path
     name: plan_id

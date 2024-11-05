@@ -4,6 +4,7 @@ This module defines the dashboard routes for the GoPlan application.
 """
 
 from flask import jsonify
+from flasgger.utils import swag_from
 from flask_jwt_extended import jwt_required, get_jwt_identity
 from app.models.dashboard import Dashboard
 from app.models.travel_plan import TravelPlan
@@ -12,6 +13,7 @@ from app.routes import app_views
 
 @app_views.route("/dashboard", methods=["GET"], strict_slashes=False)
 @jwt_required()
+@swag_from("../../docs/dashboards/get_dashboard.yaml")
 def get_dashboard():
     """
     Retrieve all travel plans for the logged-in user's dashboard.
@@ -25,6 +27,7 @@ def get_dashboard():
 @app_views.route("/dashboard/<string:plan_id>", methods=[
     "DELETE"], strict_slashes=False)
 @jwt_required()
+@swag_from("../../docs/dashboards/delete_dashboard_entry.yaml")
 def delete_dashboard_entry(plan_id):
     """
     Delete a specific travel plan from the user's dashboard.

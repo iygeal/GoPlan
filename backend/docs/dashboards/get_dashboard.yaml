@@ -1,0 +1,49 @@
+summary: "Retrieve user's dashboard"
+description: "Get all travel plans linked to the logged-in user's dashboard. The access token should be included in the Authorization header."
+tags:
+  - Dashboards
+security:
+  - Bearer: []
+responses:
+  "200":
+    description: "A list of travel plans associated with the user's dashboard."
+    schema:
+      type: array
+      items:
+        type: object
+        properties:
+          id:
+            type: string
+            example: "550e8400-e29b-41d4-a716-446655440000"
+          title:
+            type: string
+            example: "Explore Lagos"
+          state:
+            type: string
+            example: "Lagos"
+          city:
+            type: string
+            example: "Victoria Island"
+          start_date:
+            type: string
+            format: date
+            example: "2024-12-01"
+          end_date:
+            type: string
+            format: date
+            example: "2024-12-10"
+          activities:
+            type: array
+            items:
+              type: string
+            example: ["Sightseeing", "Beach visit"]
+          budget:
+            type: number
+            example: 1500
+          accommodation_details:
+            type: string
+            example: "Hotel stay at Eko Hotels"
+  "401":
+    description: "Unauthorized access. Valid JWT token required."
+  "500":
+    description: "Internal server error."

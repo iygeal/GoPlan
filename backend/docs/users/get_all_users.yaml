@@ -1,5 +1,7 @@
 summary: "Retrieve all users"
 description: "Fetch a list of all registered users. Ensure the access token is added to the Authorization header."
+tags:
+  - Users
 security:
   - Bearer: []
 responses:

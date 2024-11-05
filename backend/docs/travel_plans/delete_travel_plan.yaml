@@ -1,5 +1,7 @@
 summary: "Delete a specific travel plan"
 description: "Remove a travel plan for the authenticated user by specifying the plan ID. This will also delete the associated entry from the user's dashboard."
+tags:
+  - Travel Plans
 parameters:
   - in: path
     name: plan_id

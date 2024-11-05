@@ -1,5 +1,7 @@
 summary: "Delete a user by ID"
 description: "Remove a user from the system by providing their unique user ID. Ensure the access token is included in the Authorization header."
+tags:
+  - Users
 security:
   - Bearer: []
 parameters:

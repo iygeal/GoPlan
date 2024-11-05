@@ -1,5 +1,7 @@
 summary: "Retrieve a specific travel plan by ID"
 description: "Fetch a travel plan for the currently authenticated user based on the provided plan ID."
+tags:
+  - Travel Plans
 parameters:
   - in: path
     name: plan_id

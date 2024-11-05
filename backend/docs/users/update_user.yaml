@@ -1,5 +1,7 @@
 summary: "Update user details"
 description: "Update a user’s information by providing their unique user ID and new details in the request body. Ensure the access token is included in the Authorization header."
+tags:
+  - Users
 security:
   - Bearer: []
 parameters:
