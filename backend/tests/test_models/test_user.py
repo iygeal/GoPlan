@@ -26,9 +26,9 @@ class UserModelTestCase(unittest.TestCase):
 
         # Sample user data for testing
         self.test_user_data = {
-            "username": "testuser",
-            "email": "testuser@example.com",
-            "password": "testpassword123",
+            "username": "iygeal",
+            "email": "innocent@example.com",
+            "password": "password77",
             "first_name": "Test",
             "last_name": "User",
             "profile_picture": None,
@@ -63,20 +63,48 @@ class UserModelTestCase(unittest.TestCase):
         db.session.commit()
 
         # Retrieve the user from the database and check attributes
-        retrieved_user = User.query.filter_by(username="testuser").first()
-        self.assertIsNotNone(
-            retrieved_user, "User should exist in the database."
+        retrieved_user = User.query.filter_by(username="iygeal").first()
+        self.assertIsNotNone(retrieved_user)
+        self.assertEqual(retrieved_user.username, "iygeal")
+        self.assertEqual(retrieved_user.email, "innocent@example.com")
+        self.assertTrue(retrieved_user.check_password("password77"))
+
+    def test_invalid_email(self):
+        """Test invalid email format raises ValueError."""
+        invalid_email_user = User(
+            username="invaliduser",
+            email="invalidemail",
+            password="password123",
+            first_name="Iygeal",
+            last_name="Anozie"
         )
-        self.assertEqual(
-            retrieved_user.username, "testuser", "Username should match."
+        with self.assertRaises(ValueError):
+            invalid_email_user.validate_email()
+
+    def test_check_password(self):
+        """Test password checking with correct and incorrect passwords."""
+        user = User(
+            username="passworduser",
+            email="password@example.com",
+            password="password123",
+            first_name="Innocent",
+            last_name="Anozie"
         )
-        self.assertEqual(
-            retrieved_user.email, "testuser@example.com", "Email should match."
+        user.set_password("password123")
+        self.assertTrue(user.check_password("password123"))
+        self.assertFalse(user.check_password("wrongpassword"))
+
+    def test_to_dict(self):
+        """Test to_dict excludes the password field in the User model."""
+        user = User(
+            username="iygeal",
+            email="innocent@example.com",
+            password="password123",
+            first_name="Onyekachi",
+            last_name="Anozie"
         )
-        self.assertTrue(
-            retrieved_user.check_password("testpassword123"),
-            "Password should match."
-        )
+        user_dict = user.to_dict()
+        self.assertNotIn("password", user_dict)
 
 
 if __name__ == "__main__":

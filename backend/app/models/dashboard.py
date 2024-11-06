@@ -24,7 +24,6 @@ class Dashboard(BaseModel):
     user = db.relationship('User', back_populates='dashboards')
     travel_plan = db.relationship('TravelPlan', back_populates='dashboards')
 
-
     def __repr__(self):
         """
         Returns a string representation of the dashboard entry.
