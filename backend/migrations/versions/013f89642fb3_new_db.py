@@ -1,8 +1,8 @@
-"""Remove Location, State, and City tables
+"""new DB
 
-Revision ID: 51a86c5fcb2e
+Revision ID: 013f89642fb3
 Revises: 
-Create Date: 2024-10-31 16:42:49.885824
+Create Date: 2024-11-06 09:49:29.655538
 
 """
 from alembic import op
@@ -10,7 +10,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision = '51a86c5fcb2e'
+revision = '013f89642fb3'
 down_revision = None
 branch_labels = None
 depends_on = None
