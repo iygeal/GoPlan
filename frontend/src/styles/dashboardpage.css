@@ -136,6 +136,7 @@ button.btn-secondary:hover {
 button.btn-info {
   background-color: limegreen;
   color: white;
+  margin-top: 50px
 }
 
 button.btn-info:hover {
@@ -188,4 +189,10 @@ button.btn-danger:hover {
 button:focus {
   outline: none; /* Remove the default outline */
   box-shadow: none; /* Remove any box-shadow effects */
+}
+
+.dashboard-header {
+  background-color: #f9f9f9; /* Adds a white background */
+  padding: 20px; /* Optional: adjust padding for spacing */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Optional: slight shadow */
 }
