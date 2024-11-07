@@ -2,12 +2,12 @@ import React, { useEffect, useState } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import '../styles/homepage.css';
 import { useNavigate } from 'react-router-dom';
-import TravelPlanForm from '../components/Travelplanform'; // Adjust the path as needed
+import TravelPlanForm from '../components/Travelplanform';
 
 const HomePage = () => {
   const navigate = useNavigate();
   const [showDropdown, setShowDropdown] = useState(false);
-  const [successMessage, setSuccessMessage] = useState(''); // State for success message
+  const [successMessage, setSuccessMessage] = useState('');
 
   useEffect(() => {
     const accessToken = localStorage.getItem('access_token');
@@ -21,7 +21,7 @@ const HomePage = () => {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        'Authorization': `Bearer ${localStorage.getItem('access_token')}`, // Use JWT token for authorization
+        'Authorization': `Bearer ${localStorage.getItem('access_token')}`,
       },
       body: JSON.stringify(travelPlanData),
     })
@@ -32,14 +32,11 @@ const HomePage = () => {
       return response.json();
     })
     .then(data => {
-      // Handle successful response
       console.log('Travel Plan Created:', data);
-      setSuccessMessage('Travel plan created successfully!'); // Set success message
-
-      // Redirect to the dashboard after a brief delay
+      setSuccessMessage('Travel plan created successfully!');
       setTimeout(() => {
-        navigate('/dashboard'); // Redirect to the dashboard
-      }, 2000); // Delay of 2 seconds (2000 milliseconds)
+        navigate('/dashboard');
+      }, 2000);
     })
     .catch((error) => {
       console.error('Error creating travel plan:', error);
@@ -57,6 +54,7 @@ const HomePage = () => {
             <div className="dropdown-menu">
               <div className="dropdown-item" onClick={() => navigate('/profile')}>Your Profile</div>
               <div className="dropdown-item" onClick={() => navigate('/dashboard')}>Dashboard</div>
+              <div className="dropdown-item" onClick={() => navigate('/welcome')}>Welcome</div> {/* Added Welcome option */}
               <div className="dropdown-item" onClick={() => {
                 localStorage.removeItem('access_token');
                 navigate('/login');
@@ -66,15 +64,15 @@ const HomePage = () => {
         </div>
       </header>
 
-      {successMessage && ( // Move success message rendering here
+      {successMessage && (
         <div className="alert alert-success text-center mt-3" role="alert">
           {successMessage}
         </div>
       )}
 
       <main className="d-flex flex-column align-items-center justify-content-center text-center">
-        <h1 className="text-success">Plan Travel</h1>
-        <TravelPlanForm onSubmit={handleTravelPlanSubmit} /> {/* Pass the submit handler to the TravelPlanForm */}
+        <h1 className="title">Plan Travel</h1>
+        <TravelPlanForm onSubmit={handleTravelPlanSubmit} />
       </main>
     </div>
   );

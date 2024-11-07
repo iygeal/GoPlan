@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useRef } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import '../styles/dashboardpage.css';
+import '../styles/dashboardpage.css'; // Make sure the CSS is updated accordingly
 import { useNavigate } from 'react-router-dom';
 import TravelPlanForm from '../components/Travelplanform'; // Adjust the path as needed
 
@@ -124,7 +124,6 @@ const DashboardPage = () => {
         return;
       }
 
-      // Update the travel plans state with the new data
       setTravelPlans((prevPlans) =>
         prevPlans.map((plan) => (plan.id === planId ? { ...plan, ...dataToSend, updated_at: new Date().toISOString() } : plan))
       );
@@ -168,14 +167,13 @@ const DashboardPage = () => {
     return date.toISOString().split('T')[0];
   };
 
-  // Handle marking travel plans as completed
   const handleToggleComplete = (planId) => {
     setCompletedPlans((prevCompleted) => {
       const newCompleted = new Set(prevCompleted);
       if (newCompleted.has(planId)) {
-        newCompleted.delete(planId); // Uncheck if already completed
+        newCompleted.delete(planId);
       } else {
-        newCompleted.add(planId); // Check if not completed
+        newCompleted.add(planId);
       }
       return newCompleted;
     });
@@ -183,73 +181,84 @@ const DashboardPage = () => {
 
   return (
     <div className="dashboard">
-      <header>
+      <header className="dashboard-header">
         <h1>Your Travel Plans</h1>
+        <button className="btn btn-secondary mb-3" onClick={() => navigate(-1)}>
+          Back
+        </button>
       </header>
       <main>
-        <h2>Checklist for Completed Travels</h2>
-        <ul className="list-group mb-3">
-          {travelPlans.map((plan) => (
-            <li key={plan.id} className="list-group-item d-flex justify-content-between align-items-center">
-              <span>{plan.title}</span>
-              <input
-                type="checkbox"
-                checked={completedPlans.has(plan.id)}
-                onChange={() => handleToggleComplete(plan.id)}
-              />
-            </li>
-          ))}
-        </ul>
-
-        {travelPlans.length === 0 ? (
-          <p>No travel plans found.</p>
-        ) : (
-          <ul className="list-group">
+        <section className="travel-plan-checklist">
+          <h2>Checklist for Completed Travels</h2>
+          <ul className="list-group mb-3">
             {travelPlans.map((plan) => (
-              <li key={plan.id} className="list-group-item">
-                {editingPlanId === plan.id ? (
-                  <div ref={modalRef}>
-                    <TravelPlanForm
-                      plan={editedPlan}
-                      onSubmit={handleSave} // Pass the handleSave function to TravelPlanForm
-                      onChange={handleChange}
-                    />
-                    <button className="btn btn-secondary" onClick={handleCancelEdit}>
-                      Cancel
-                    </button>
-                  </div>
-                ) : (
-                  <div>
-                    <h5>{plan.title}</h5>
-                    <p>State: {plan.state}</p>
-                    <p>City: {plan.city}</p>
-                    <p>Budget: ₦{plan.budget.toLocaleString()}</p>
-                    <p>Activities: {plan.activities}</p>
-                    <p>Accommodation: {plan.accommodation_details}</p>
-                    <p>Start Date: {formatDate(plan.start_date)}</p>
-                    <p>End Date: {formatDate(plan.end_date)}</p>
-                    <p>Created At: {formatDate(plan.created_at)}</p>
-                    {plan.updated_at && (
-                      <p>Edited At: {formatDate(plan.updated_at)}</p>
-                    )}
-                    <button
-                      className="btn btn-info mr-2"
-                      onClick={() => handleEdit(plan)}
-                    >
-                      Edit
-                    </button>
-                    <button
-                      className="btn btn-danger"
-                      onClick={() => handleDelete(plan.id)}
-                    >
-                      Delete
-                    </button>
-                  </div>
-                )}
+              <li key={plan.id} className="list-group-item d-flex justify-content-between align-items-center">
+                <span>{plan.title}</span>
+                <input
+                  type="checkbox"
+                  checked={completedPlans.has(plan.id)}
+                  onChange={() => handleToggleComplete(plan.id)}
+                />
               </li>
             ))}
           </ul>
-        )}
+        </section>
+
+        <section className="travel-plan-list">
+          {travelPlans.length === 0 ? (
+            <p>No travel plans found.</p>
+          ) : (
+            <ul className="list-group">
+              {travelPlans.map((plan) => (
+                <li key={plan.id} className="list-group-item travel-plan-card">
+                  {editingPlanId === plan.id ? (
+                    <div ref={modalRef} className="dashboard-form-container">
+                      <div className="travel-plan-form">
+                        <TravelPlanForm
+                          plan={editedPlan}
+                          onSubmit={handleSave}
+                          onChange={handleChange}
+                        />
+                        <button className="btn btn-secondary" onClick={handleCancelEdit}>
+                          Cancel
+                        </button>
+                      </div>
+                    </div>
+                  ) : (
+                    <div className="plan-details">
+                      <h5>{plan.title}</h5>
+                      <p><strong>State:</strong> {plan.state}</p>
+                      <p><strong>City:</strong> {plan.city}</p>
+                      <p><strong>Budget:</strong> ₦{plan.budget.toLocaleString()}</p>
+                      <p><strong>Activities:</strong> {plan.activities}</p>
+                      <p><strong>Accommodation:</strong> {plan.accommodation_details}</p>
+                      <p><strong>Start Date:</strong> {formatDate(plan.start_date)}</p>
+                      <p><strong>End Date:</strong> {formatDate(plan.end_date)}</p>
+                      <p><strong>Created At:</strong> {formatDate(plan.created_at)}</p>
+                      {plan.updated_at && (
+                        <p><strong>Edited At:</strong> {formatDate(plan.updated_at)}</p>
+                      )}
+                      <div className="button-group">
+                        <button
+                          className="btn btn-info mr-2"
+                          onClick={() => handleEdit(plan)}
+                        >
+                          Edit
+                        </button>
+                        <button
+                          className="btn btn-danger"
+                          onClick={() => handleDelete(plan.id)}
+                        >
+                          Delete
+                        </button>
+                      </div>
+                    </div>
+                  )}
+                </li>
+              ))}
+            </ul>
+          )}
+        </section>
       </main>
     </div>
   );

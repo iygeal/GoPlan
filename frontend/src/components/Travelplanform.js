@@ -227,7 +227,7 @@ const TravelPlanForm = ({ plan, onSubmit }) => {
         {dateError && <small className="text-danger">{dateError}</small>}
       </div>
 
-      <button type="submit" className="btn btn-primary">
+      <button type="submit" className="btn btn-success">
         {plan ? 'Update Travel Plan' : 'Create Travel Plan'}
       </button>
     </form>

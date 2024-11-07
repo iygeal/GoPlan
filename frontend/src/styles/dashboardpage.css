@@ -1,114 +1,131 @@
 .dashboard {
-    max-width: 800px;
-    margin: 0 auto;
-    padding: 20px;
-    background-color: #f9f9f9;
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  font-family: Arial, sans-serif;
+  margin: 20px;
 }
 
-.dashboard header {
-    text-align: center;
-    margin-bottom: 20px;
+.dashboard-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  padding: 0;
+  box-shadow: none;
 }
 
-.dashboard header h1 {
-    font-size: 1.8em;
-    color: greenyellow;
-    font-weight: bold;
+h1 {
+  font-size: 2rem;
+  font-weight: bold;
 }
 
-.dashboard main {
-    display: flex;
-    flex-direction: column;
+button {
+  font-size: 1rem;
+}
+
+.travel-plan-checklist {
+  margin-bottom: 20px;
+}
+
+.travel-plan-list .travel-plan-card {
+  background-color: #f9f9f9;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  margin-bottom: 15px;
+  padding: 20px;
+  transition: background-color 0.3s ease;
+}
+
+.travel-plan-card:hover {
+  background-color: #f1f1f1;
+}
+
+.plan-details h5 {
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+
+.plan-details p {
+  margin: 8px 0;
+}
+
+.plan-details .button-group {
+  margin-top: 10px;
+}
+
+.plan-details button {
+  margin-right: 10px;
 }
 
 .list-group-item {
-    background-color: #ffffff;
-    border-radius: 6px;
-    padding: 20px;
-    margin-bottom: 10px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    transition: transform 0.1s ease-in-out;
+  padding: 10px 15px;
+  background-color: #f7f7f7;
 }
 
-.list-group-item:hover {
-    transform: scale(1.02);
+/* Center and scrollable form container */
+.dashboard-form-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5); /* semi-transparent background */
+  z-index: 9999; /* ensures it appears above all other content */
+  overflow-y: auto; /* Allow scrolling if content overflows */
 }
 
-.list-group-item h5 {
-    font-size: 1.5em;
-    color: #007bff;
-    margin-bottom: 10px;
+.travel-plan-form {
+  background-color: #fff;
+  padding: 30px;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  width: 50%;
+  max-width: 600px;
+  max-height: 80%; /* Limit the height to 80% of the screen */
+  overflow-y: auto; /* Enable vertical scrolling */
+  position: relative;
 }
 
-.list-group-item p {
-    margin: 0;
-    color: #555;
-    font-size: 0.9em;
+button.btn-secondary {
+  background-color: #ccc;
+  color: #fff;
 }
 
-.list-group-item p + p {
-    margin-top: 5px;
+button.btn-secondary:hover {
+  background-color: #bbb;
 }
 
-.form-control {
-    border: 1px solid #ddd;
-    border-radius: 4px;
-    margin-bottom: 10px;
+button.btn-info {
+  background-color: limegreen;
+  color: white;
 }
 
-.btn {
-    font-size: 0.85em;
-    padding: 8px 12px;
-    margin-top: 10px;
-    transition: background-color 0.2s ease;
+button.btn-info:hover {
+  background-color: limegreen;
 }
 
-.btn-info {
-    background-color: #007bff;
-    color: white;
+button.btn-danger {
+  background-color: #dc3545;
+  color: white;
 }
 
-.btn-info:hover {
-    background-color: #0056b3;
+button.btn-danger:hover {
+  background-color: #c82333;
 }
 
-.btn-danger {
-    background-color: #dc3545;
-    color: white;
+.travel-plan-checklist .list-group-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
-.btn-danger:hover {
-    background-color: #a71d2a;
+.travel-plan-checklist input[type="checkbox"] {
+  transform: scale(1.2);
 }
 
-.btn-success {
-    background-color: #28a745;
-    color: white;
-}
-
-.btn-success:hover {
-    background-color: #218838;
-}
-
-.btn-secondary {
-    background-color: #6c757d;
-    color: white;
-}
-
-.btn-secondary:hover {
-    background-color: #545b62;
-}
-
-input[type="text"],
-input[type="number"],
-textarea {
-    padding: 8px;
-    font-size: 1em;
-}
-
-input[type="date"] {
-    padding: 8px;
-    font-size: 1em;
+/* Move Cancel button lower */
+.cancel-button-container {
+  margin-top: 20px; /* Adjust this value to move the button lower */
+  text-align: center;
 }

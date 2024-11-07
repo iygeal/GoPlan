@@ -1,15 +1,132 @@
-.confirmation-prompt {
-    position: fixed; /* Makes it stay on top of other content */
-    top: 50%; /* Center vertically */
-    left: 50%; /* Center horizontally */
-    transform: translate(-50%, -50%); /* Adjust for the width and height of the element */
-    background-color: white; /* Background color */
-    border: 1px solid #ccc; /* Border */
-    padding: 20px; /* Padding */
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* Shadow */
-    z-index: 1000; /* Ensure it's on top */
+/* General page styling */
+.profile-page {
+    padding: 20px;
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f9;
+    color: white;
 }
 
-.confirmation-prompt button {
-    margin: 5px; /* Margin between buttons */
+/* Header styling */
+.profile-header {
+    display: flex;
+    align-items: center;
+    background-color: #4CAF50; /* Green color for header */
+    color: white;
+    padding: 10px;
+    margin-bottom: 20px;
+}
+
+.profile-header h1 {
+    margin-left: 10px;
+    font-size: 24px;
+}
+
+.back-btn {
+    background-color: transparent;
+    border: none;
+    font-size: 20px;
+    color: white;
+    cursor: pointer;
+    padding: 5px;
+}
+
+/* Profile details section */
+.profile-details {
+    background-color: white;
+    border-radius: 8px;
+    padding: 20px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.profile-details h2 {
+    color: #333;
+    font-size: 24px;
+    margin-bottom: 20px;
+    border-bottom: 2px solid #e0e0e0;
+    padding-bottom: 10px;
+}
+
+/* Styling user info */
+.user-info {
+    font-size: 16px;
+    color: #444;
+}
+
+.user-info p {
+    margin-bottom: 15px;
+    font-weight: 500;
+}
+
+.user-info strong {
+    color: #333;
+}
+
+/* Edit form styling */
+.edit-form .form-group {
+    margin-bottom: 20px;
+}
+
+.edit-form .form-group label {
+    font-size: 16px;
+    color: #333;
+    display: block;
+    margin-bottom: 5px;
+}
+
+.edit-form .form-group input, .edit-form .form-group textarea {
+    width: 100%;
+    padding: 12px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    background-color: #fafafa;
+}
+
+.edit-form .form-group textarea {
+    resize: vertical;
+}
+
+/* Button group styling */
+.button-group button {
+    border: none;
+    padding: 12px 18px;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-right: 10px;
+    font-size: 16px;
+}
+
+.button-group button:hover {
+    background-color: #45a049;
+}
+
+.button-group button:disabled {
+    background-color: #cccccc;
+    cursor: not-allowed;
+}
+
+/* Red delete button */
+.delete-btn {
+    color: red;
+    border: none;
+    padding: 12px 18px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    margin-left: 10px;
+}
+
+.delete-btn:hover {
+    background-color: #c0392b; /* Darker red */
+}
+
+/* Alert styling */
+.alert-danger {
+    color: red;
+    font-size: 16px;
+    margin-bottom: 20px;
+}
+
+.profile-page h1{
+    color: white;
 }

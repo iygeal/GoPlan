@@ -1,7 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom'; // For back navigation
+import '../styles/profilepage.css';
 
 const ProfilePage = () => {
+    const navigate = useNavigate();
     const [user, setUser] = useState(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
@@ -55,18 +58,18 @@ const ProfilePage = () => {
 
             console.log("Updating user with data:", filteredUser); // Log the filtered data to be sent
 
-            const response = await axios.put(`http://localhost:5000/api/users/${userId}`, filteredUser, {
+            // Perform the PUT request without storing the response
+            await axios.put(`http://localhost:5000/api/users/${userId}`, filteredUser, {
                 headers: { Authorization: `Bearer ${token}` },
             });
 
-            console.log("Update response:", response.data); // Log the response
+            console.log("Update successful"); // Optional: log success
 
             // Update the local user state with the new data
             setUser(prevUser => ({ ...prevUser, ...filteredUser })); // Merge updated fields with the existing user data
             setEditMode(false);
             setError(null); // Clear any previous error
         } catch (err) {
-            console.error("Error updating user data:", err.response ? err.response.data : err);
             setError("Failed to update user data. Please try again.");
         } finally {
             setLoadingSave(false); // End loading state
@@ -102,47 +105,55 @@ const ProfilePage = () => {
     }
 
     return (
-        <div>
-            <h1>Profile Page</h1>
+        <div className="profile-page">
+            <header className="profile-header">
+                <button className="back-btn" onClick={() => navigate(-1)}>←</button>
+                <h1>Profile Page</h1>
+            </header>
+
             {user ? (
-                <div>
+                <div className="profile-details">
                     <h2>User Details</h2>
                     {editMode ? (
-                        <>
-                            <div>
-                                <strong>Username:</strong>
+                        <div className="edit-form">
+                            <div className="form-group">
+                                <label>Username:</label>
                                 <input type="text" name="username" value={updatedUser.username} onChange={handleInputChange} />
                             </div>
-                            <div>
-                                <strong>Email:</strong>
+                            <div className="form-group">
+                                <label>Email:</label>
                                 <input type="email" name="email" value={updatedUser.email} onChange={handleInputChange} />
                             </div>
-                            <div>
-                                <strong>First Name:</strong>
+                            <div className="form-group">
+                                <label>First Name:</label>
                                 <input type="text" name="first_name" value={updatedUser.first_name} onChange={handleInputChange} />
                             </div>
-                            <div>
-                                <strong>Last Name:</strong>
+                            <div className="form-group">
+                                <label>Last Name:</label>
                                 <input type="text" name="last_name" value={updatedUser.last_name} onChange={handleInputChange} />
                             </div>
-                            <div>
-                                <strong>Bio:</strong>
+                            <div className="form-group">
+                                <label>Bio:</label>
                                 <textarea name="bio" value={updatedUser.bio} onChange={handleInputChange}></textarea>
                             </div>
-                            <button onClick={handleSaveChanges} disabled={loadingSave}>
-                                {loadingSave ? 'Saving...' : 'Save Changes'}
-                            </button>
-                            <button onClick={handleEditToggle}>Cancel</button>
-                        </>
+                            <div className="button-group">
+                                <button onClick={handleSaveChanges} disabled={loadingSave}>
+                                    {loadingSave ? 'Saving...' : 'Save Changes'}
+                                </button>
+                                <button onClick={handleEditToggle}>Cancel</button>
+                            </div>
+                        </div>
                     ) : (
-                        <>
+                        <div className="user-info">
                             <p><strong>Username:</strong> {user.username}</p>
                             <p><strong>Email:</strong> {user.email}</p>
                             <p><strong>Full Name:</strong> {user.first_name} {user.last_name}</p>
                             <p><strong>Bio:</strong> {user.bio}</p>
-                            <button onClick={handleEditToggle}>Edit Profile</button>
-                            <button onClick={handleDeleteAccount}>Delete Account</button>
-                        </>
+                            <div className="button-group">
+                                <button onClick={handleEditToggle}>Edit Profile</button>
+                                <button className="delete-btn" onClick={handleDeleteAccount}>Delete Account</button>
+                            </div>
+                        </div>
                     )}
                 </div>
             ) : (
