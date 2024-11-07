@@ -19,7 +19,6 @@ from app.models.travel_plan import TravelPlan
 from app.models.search_history import SearchHistory
 from app.models.dashboard import Dashboard
 
-
 # Import the route and error handler initializer
 from app.routes import init_app
 
