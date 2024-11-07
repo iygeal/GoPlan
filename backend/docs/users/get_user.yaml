@@ -1,5 +1,7 @@
 summary: "Retrieve a user by ID"
-description: "Fetch a user’s details by providing their unique user ID."
+description: "Fetch a user’s details by providing their unique user ID. Don't forget to add their access token to the Authorization header."
+tags:
+  - Users
 security:
   - Bearer: []
 parameters:

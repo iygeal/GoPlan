@@ -2,6 +2,8 @@ summary: "Log in a user"
 description: "Authenticate a user by providing email or username and password to receive an access token."
 consumes:
   - application/json
+tags:
+  - Users
 parameters:
   - in: body
     name: body

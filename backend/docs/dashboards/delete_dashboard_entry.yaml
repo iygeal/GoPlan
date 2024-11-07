@@ -1,0 +1,31 @@
+summary: "Delete a travel plan from the user's dashboard"
+description: "Remove a specific travel plan entry from the user's dashboard. The access token must be included in the Authorization header."
+tags:
+  - Dashboards
+security:
+  - Bearer: []
+parameters:
+  - in: path
+    name: plan_id
+    type: string
+    required: true
+    description: "The unique identifier of the travel plan to be removed from the dashboard"
+    example: "550e8400-e29b-41d4-a716-446655440000"
+responses:
+  "200":
+    description: "Travel plan successfully deleted from the dashboard."
+    schema:
+      type: object
+      properties:
+        success:
+          type: boolean
+          example: true
+        message:
+          type: string
+          example: "Travel plan deleted from dashboard"
+  "404":
+    description: "Dashboard entry not found."
+  "401":
+    description: "Unauthorized access. Valid JWT token required."
+  "500":
+    description: "Internal server error."

@@ -30,4 +30,14 @@ class Config:
         os.getenv('JWT_ACCESS_TOKEN_EXPIRES', 86400))
 
 
+class TestConfig(Config):
+    """Configuration class specifically for testing."""
+    TESTING = True
+    SQLALCHEMY_DATABASE_URI = "sqlite:///:memory:"  # In-memory database for testing
+    JWT_SECRET_KEY = "test_secret"
+    JWT_ACCESS_TOKEN_EXPIRES = 300
+
+
+# Export the desired configuration based on environment
 config = Config()
+test_config = TestConfig()

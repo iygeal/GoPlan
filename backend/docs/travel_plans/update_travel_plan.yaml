@@ -1,0 +1,88 @@
+summary: "Update an existing travel plan's details"
+description: "Modify details of a travel plan for the currently authenticated user by providing the plan ID and the updated fields."
+tags:
+  - Travel Plans
+parameters:
+  - in: path
+    name: plan_id
+    description: "ID of the travel plan to update"
+    required: true
+    type: string
+  - in: header
+    name: Authorization
+    description: "JWT token for authorization. Example: Bearer <your_token>"
+    required: true
+    type: string
+  - in: body
+    name: body
+    description: "Fields to update for the travel plan"
+    required: true
+    schema:
+      type: object
+      properties:
+        title:
+          type: string
+          example: "Updated Trip to Lagos"
+        state:
+          type: string
+          example: "Lagos"
+        city:
+          type: string
+          example: "Victoria Island"
+        start_date:
+          type: string
+          example: "2024-11-10"
+        end_date:
+          type: string
+          example: "2024-11-20"
+        activities:
+          type: string
+          example: "Beach, museums, nightlife"
+        budget:
+          type: number
+          example: 6000
+        accommodation_details:
+          type: string
+          example: "Resort in Lekki"
+      additionalProperties: false
+responses:
+  "200":
+    description: "Successfully updated the travel plan"
+    schema:
+      type: object
+      properties:
+        id:
+          type: string
+          example: "123e4567-e89b-12d3-a456-426614174000"
+        title:
+          type: string
+          example: "Updated Trip to Lagos"
+        state:
+          type: string
+          example: "Lagos"
+        city:
+          type: string
+          example: "Victoria Island"
+        start_date:
+          type: string
+          example: "2024-11-10"
+        end_date:
+          type: string
+          example: "2024-11-20"
+        activities:
+          type: string
+          example: "Beach, museums, nightlife"
+        budget:
+          type: number
+          example: 6000
+        accommodation_details:
+          type: string
+          example: "Resort in Lekki"
+  "400":
+    description: "Invalid request format or attribute(s) provided"
+  "404":
+    description: "Travel plan not found"
+  "401":
+    description: "Unauthorized access - JWT token missing or invalid"
+  "500":
+    description: "Internal server error"

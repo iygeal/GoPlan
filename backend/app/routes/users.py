@@ -94,6 +94,7 @@ def get_user(user_id):
 # GET ALL USERS
 @app_views.route('/users', methods=['GET'], strict_slashes=False)
 @jwt_required()
+@swag_from('../../docs/users/get_all_users.yaml')
 def get_users():
     """Retrieve all users"""
     users = User.query.all()
@@ -103,6 +104,7 @@ def get_users():
 # UPDATE USER
 @app_views.route('/users/<user_id>', methods=['PUT'], strict_slashes=False)
 @jwt_required()
+@swag_from('../../docs/users/update_user.yaml')
 def update_user(user_id):
     """Update user details"""
     user = User.query.get(user_id)
@@ -141,6 +143,7 @@ def update_user(user_id):
 @app_views.route(
     '/users/<user_id>', methods=['DELETE'], strict_slashes=False)
 @jwt_required()
+@swag_from('../../docs/users/delete_user.yaml')
 def delete_user(user_id):
     """Delete a user by ID"""
     user = User.query.get(user_id)
