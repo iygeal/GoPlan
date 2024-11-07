@@ -5,17 +5,11 @@
   justify-content: space-between;
 }
 
-header {
-  box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.1);
-}
 
 .logo {
   width: 120px;
 }
 
-.title{
-  color: limegreen;
-}
 
 .profile-icon {
   position: relative;

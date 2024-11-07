@@ -187,6 +187,9 @@ const DashboardPage = () => {
           Back
         </button>
       </header>
+      <div className="text-center mb-4">
+        <button className="btn btn-info" onClick={() => navigate('/home')}>Create Travel Plan</button>
+      </div>
       <main>
         <section className="travel-plan-checklist">
           <h2>Checklist for Completed Travels</h2>
@@ -240,7 +243,7 @@ const DashboardPage = () => {
                       )}
                       <div className="button-group">
                         <button
-                          className="btn btn-info mr-2"
+                          className="btn btn-info"
                           onClick={() => handleEdit(plan)}
                         >
                           Edit

@@ -8,8 +8,8 @@
   justify-content: space-between;
   align-items: center;
   margin-bottom: 20px;
-  padding: 0;
-  box-shadow: none;
+  padding-top: 0;
+  box-shadow: 0px;
 }
 
 h1 {
@@ -17,14 +17,37 @@ h1 {
   font-weight: bold;
 }
 
-button {
-  font-size: 1rem;
+/* Travel Plan Form styling */
+.travel-plan-form .form-group {
+  margin-bottom: 15px;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
 }
 
-.travel-plan-checklist {
-  margin-bottom: 20px;
+.travel-plan-form .form-group label {
+  font-size: 14px;
+  color: #666;
+  font-weight: bold;
 }
 
+.travel-plan-form .form-group input,
+.travel-plan-form .form-group textarea {
+  width: 100%;
+  padding: 8px;
+  font-size: 14px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  background-color: #fff;
+  color: #333;
+}
+
+.travel-plan-form .form-group textarea {
+  resize: vertical;
+  height: 80px;
+}
+
+/* Travel Plan Card styling */
 .travel-plan-list .travel-plan-card {
   background-color: #f9f9f9;
   border: 1px solid #ddd;
@@ -47,6 +70,11 @@ button {
   margin: 8px 0;
 }
 
+/* Button styling */
+button {
+  font-size: 1rem;
+}
+
 .plan-details .button-group {
   margin-top: 10px;
 }
@@ -55,12 +83,20 @@ button {
   margin-right: 10px;
 }
 
-.list-group-item {
+/* Checklist and List Item styling */
+.travel-plan-checklist .list-group-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
   padding: 10px 15px;
   background-color: #f7f7f7;
 }
 
-/* Center and scrollable form container */
+.travel-plan-checklist input[type="checkbox"] {
+  transform: scale(1.2);
+}
+
+/* Modal-like form container for travel plan form */
 .dashboard-form-container {
   display: flex;
   justify-content: center;
@@ -70,9 +106,9 @@ button {
   left: 0;
   width: 100%;
   height: 100%;
-  background-color: rgba(0, 0, 0, 0.5); /* semi-transparent background */
-  z-index: 9999; /* ensures it appears above all other content */
-  overflow-y: auto; /* Allow scrolling if content overflows */
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 9999;
+  overflow-y: auto;
 }
 
 .travel-plan-form {
@@ -82,11 +118,12 @@ button {
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   width: 50%;
   max-width: 600px;
-  max-height: 80%; /* Limit the height to 80% of the screen */
-  overflow-y: auto; /* Enable vertical scrolling */
+  max-height: 80%;
+  overflow-y: auto;
   position: relative;
 }
 
+/* Button Styling */
 button.btn-secondary {
   background-color: #ccc;
   color: #fff;
@@ -102,7 +139,7 @@ button.btn-info {
 }
 
 button.btn-info:hover {
-  background-color: limegreen;
+  background-color: darkgreen;
 }
 
 button.btn-danger {
@@ -114,18 +151,41 @@ button.btn-danger:hover {
   background-color: #c82333;
 }
 
-.travel-plan-checklist .list-group-item {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.travel-plan-checklist input[type="checkbox"] {
-  transform: scale(1.2);
-}
-
-/* Move Cancel button lower */
+/* Centered Cancel Button Styling */
 .cancel-button-container {
-  margin-top: 20px; /* Adjust this value to move the button lower */
+  margin-top: 20px;
   text-align: center;
+}
+
+/* Travel Plan Card styling with lime green background */
+.travel-plan-list .travel-plan-card {
+  background-color: black; /* black */
+  border: 1px solid #2e8b57; /* Darker green border for contrast */
+  border-radius: 8px;
+  margin-bottom: 15px;
+  padding: 20px;
+  transition: background-color 0.3s ease;
+  color: #fff; /* White text for contrast */
+}
+
+.travel-plan-card:hover {
+  background-color: #2eb82e; /* Slightly darker green on hover */
+}
+
+/* Plan title and details styling for readability */
+.plan-details h5 {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #fff;
+}
+
+.plan-details p {
+  margin: 8px 0;
+  color: #f0f0f0; /* Light gray text color for contrast */
+}
+
+/* Remove focus outline and background for buttons */
+button:focus {
+  outline: none; /* Remove the default outline */
+  box-shadow: none; /* Remove any box-shadow effects */
 }
