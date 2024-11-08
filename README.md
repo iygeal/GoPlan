@@ -36,15 +36,15 @@
 
 ## **Backend:**
 
--     **Python 3:** The core programming language.
--     **Flask:** The main web framework for building the backend API.
+- **Python 3:** The core programming language.
+- **Flask:** The main web framework for building the backend API.
 - **Flask-SQLAlchemy:** Used as the ORM for database interactions.
--     **MySQL:** The main database for storing application data.
--     **SQLite:** Used as an in-memory database for testing.
--     **JWT (JSON Web Tokens):** For secure user authentication.
--     **Flasgger:** To generate API documentation.
--     **Flask-CORS:** To manage cross-origin requests.
--     **Flask-Migrate:** For database migrations.
+- **MySQL:** The main database for storing application data.
+- **SQLite:** Used as an in-memory database for testing.
+- **JWT (JSON Web Tokens):** For secure user authentication.
+- **Flasgger:** To generate API documentation.
+- **Flask-CORS:** To manage cross-origin requests.
+- **Flask-Migrate:** For database migrations.
 
 ## **Frontend:**
 
