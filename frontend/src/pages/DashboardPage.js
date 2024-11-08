@@ -1,26 +1,29 @@
 import React, { useEffect, useState, useRef } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import '../styles/dashboardpage.css'; // Make sure the CSS is updated accordingly
+import '../styles/dashboardpage.css'; // Import custom CSS for the dashboard page
 import { useNavigate } from 'react-router-dom';
-import TravelPlanForm from '../components/Travelplanform'; // Adjust the path as needed
+import TravelPlanForm from '../components/Travelplanform'; // Import TravelPlanForm component
 
 const DashboardPage = () => {
+  // State variables to manage travel plans, editing state, completed plans, etc.
   const [travelPlans, setTravelPlans] = useState([]);
-  const [editingPlanId, setEditingPlanId] = useState(null);
-  const [editedPlan, setEditedPlan] = useState({});
-  const [completedPlans, setCompletedPlans] = useState(new Set()); // Track completed plans
-  const navigate = useNavigate();
-  const modalRef = useRef(null);
+  const [editingPlanId, setEditingPlanId] = useState(null); // Track the ID of the plan being edited
+  const [editedPlan, setEditedPlan] = useState({}); // Store the details of the plan being edited
+  const [completedPlans, setCompletedPlans] = useState(new Set()); // Track completed plans by their IDs
+  const navigate = useNavigate(); // React Router hook for navigation
+  const modalRef = useRef(null); // Reference to modal container for editing plans
 
   useEffect(() => {
+    // Function to fetch travel plans from the server
     const fetchTravelPlans = async () => {
       const accessToken = localStorage.getItem('access_token');
       if (!accessToken) {
-        navigate('/login'); // Redirect if not authenticated
+        navigate('/login'); // Redirect to login if no access token is found
         return;
       }
 
       try {
+        // Fetch travel plans with authorization header
         const response = await fetch('http://localhost:5000/api/dashboard', {
           method: 'GET',
           headers: {
@@ -33,6 +36,7 @@ const DashboardPage = () => {
         }
 
         const plans = await response.json();
+        // Sort plans by creation date in descending order
         plans.sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
         setTravelPlans(plans);
       } catch (error) {
@@ -40,7 +44,7 @@ const DashboardPage = () => {
       }
     };
 
-    fetchTravelPlans();
+    fetchTravelPlans(); // Initial fetch on component mount
   }, [navigate]);
 
   const handleDelete = async (planId) => {
@@ -48,6 +52,7 @@ const DashboardPage = () => {
 
     if (window.confirm('Are you sure you want to delete this travel plan?')) {
       try {
+        // Send a delete request for the specified plan
         const response = await fetch(`http://localhost:5000/api/dashboard/${planId}`, {
           method: 'DELETE',
           headers: {
@@ -61,6 +66,7 @@ const DashboardPage = () => {
           return;
         }
 
+        // Remove deleted plan from state
         setTravelPlans((prevPlans) => prevPlans.filter((plan) => plan.id !== planId));
         alert('Travel plan deleted successfully!');
       } catch (error) {
@@ -71,6 +77,7 @@ const DashboardPage = () => {
   };
 
   const handleEdit = (plan) => {
+    // Set editing state and populate form with current plan data
     setEditingPlanId(plan.id);
     setEditedPlan({
       ...plan,
@@ -83,6 +90,7 @@ const DashboardPage = () => {
     const accessToken = localStorage.getItem('access_token');
     const planId = editingPlanId;
 
+    // Ensure dates are valid
     const today = new Date();
     const startDate = new Date(updatedPlan.start_date);
     const endDate = new Date(updatedPlan.end_date);
@@ -97,6 +105,7 @@ const DashboardPage = () => {
       return;
     }
 
+    // Prepare data for updating the plan
     const dataToSend = {
       title: updatedPlan.title,
       state: updatedPlan.state,
@@ -109,6 +118,7 @@ const DashboardPage = () => {
     };
 
     try {
+      // Send a PUT request to update the travel plan
       const response = await fetch(`http://localhost:5000/api/travel-plans/${planId}`, {
         method: 'PUT',
         headers: {
@@ -124,11 +134,12 @@ const DashboardPage = () => {
         return;
       }
 
+      // Update the travel plan in state
       setTravelPlans((prevPlans) =>
         prevPlans.map((plan) => (plan.id === planId ? { ...plan, ...dataToSend, updated_at: new Date().toISOString() } : plan))
       );
 
-      setEditingPlanId(null);
+      setEditingPlanId(null); // Clear editing state
       alert(`Travel plan updated successfully! Edited at: ${new Date().toLocaleString()}`);
     } catch (error) {
       console.error('Error updating travel plan:', error);
@@ -137,6 +148,7 @@ const DashboardPage = () => {
   };
 
   const handleChange = (e) => {
+    // Handle form input changes during editing
     const { name, value } = e.target;
     setEditedPlan((prev) => ({
       ...prev,
@@ -145,11 +157,13 @@ const DashboardPage = () => {
   };
 
   const handleCancelEdit = () => {
+    // Cancel editing and clear edited plan data
     setEditingPlanId(null);
     setEditedPlan({});
   };
 
   useEffect(() => {
+    // Detect clicks outside modal to close it when editing
     const handleClickOutside = (e) => {
       if (modalRef.current && !modalRef.current.contains(e.target)) {
         handleCancelEdit();
@@ -163,11 +177,13 @@ const DashboardPage = () => {
   }, []);
 
   const formatDate = (dateString) => {
+    // Format date string as yyyy-MM-dd
     const date = new Date(dateString);
     return date.toISOString().split('T')[0];
   };
 
   const handleToggleComplete = (planId) => {
+    // Toggle the completion status of a travel plan
     setCompletedPlans((prevCompleted) => {
       const newCompleted = new Set(prevCompleted);
       if (newCompleted.has(planId)) {
@@ -238,23 +254,13 @@ const DashboardPage = () => {
                       <p><strong>Start Date:</strong> {formatDate(plan.start_date)}</p>
                       <p><strong>End Date:</strong> {formatDate(plan.end_date)}</p>
                       <p><strong>Created At:</strong> {formatDate(plan.created_at)}</p>
-                      {plan.updated_at && (
-                        <p><strong>Edited At:</strong> {formatDate(plan.updated_at)}</p>
-                      )}
-                      <div className="button-group">
-                        <button
-                          className="btn btn-info"
-                          onClick={() => handleEdit(plan)}
-                        >
-                          Edit
-                        </button>
-                        <button
-                          className="btn btn-danger"
-                          onClick={() => handleDelete(plan.id)}
-                        >
-                          Delete
-                        </button>
-                      </div>
+                      {plan.updated_at && <p><strong>Updated At:</strong> {formatDate(plan.updated_at)}</p>}
+                      <button className="btn btn-primary" onClick={() => handleEdit(plan)}>
+                        Edit
+                      </button>
+                      <button className="btn btn-danger ms-2" onClick={() => handleDelete(plan.id)}>
+                        Delete
+                      </button>
                     </div>
                   )}
                 </li>

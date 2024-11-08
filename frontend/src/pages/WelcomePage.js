@@ -62,7 +62,7 @@ const WelcomePage = () => {
       <footer className="bg-light text-center text-lg-start mt-4">
         <div className="container p-4">
           <img src="/assets/images/goplanlogo.png" className="logo my-3" alt="GoPlan Logo" />
-          <p>Discover Nigeria like never before with GoPlan. Explore the most visited places, festivals, and more.</p>
+          <p>Discover Nigeria like never before with Goplan. Explore the most visited places, festivals, and more.</p>
         </div>
         <div className="text-center p-3" style={{ backgroundColor: 'rgba(0, 0, 0, 0.2)' }}>
           © 2024 Copyright:

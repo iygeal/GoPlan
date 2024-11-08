@@ -15,7 +15,7 @@ const LandingPage = () => {
         <div className="container">
           <h1>Discover Nigeria Like Never Before</h1>
           <p>
-            GoPlan aims to simplify the process of planning vacations by offering an easy-to-use platform for searching, organizing, and managing travel plans.
+            Goplan aims to simplify the process of planning vacations by offering an easy-to-use platform for searching, organizing, and managing travel plans.
           </p>
           <div className="button-container">
             <button className="btn btn-outline-success" onClick={() => navigate("/login")}>Login</button>
@@ -114,7 +114,7 @@ const LandingPage = () => {
             <div className="my-5 mb-md-0">
               <img src="/assets/images/goplanlogo.png" className="logo my-3" alt="Goplanlogo" />
               <p>
-                Discover Nigeria like never before with GoPlan. Explore the most visited places, festivals, and more.
+                Discover Nigeria like never before with Goplan. Explore the most visited places, festivals, and more.
               </p>
             </div>
           </div>
