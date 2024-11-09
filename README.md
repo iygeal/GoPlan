@@ -126,10 +126,12 @@ sudo apt install pkg-config libmysqlclient-dev build-essential
    ```
 
    - The backend server will now be running at http://127.0.0.1:5000
-   - Proper documentation on how to access various endpoints of the GoPlan API can be found on http://localhost:5000/apidocs/ once the server is running.
-   - You can also test the endpoints using Postman or via the Swagger UI at http://localhost:5000/apidocs/
 
-   **Running Tests**
+   ## Swagger Documentation
+   - Proper documentation on how to access various endpoints of the GoPlan API can be found on http://localhost:5000/apidocs/ once the server is running.
+   - You can also test the endpoints via the Swagger UI at http://localhost:5000/apidocs/
+
+   ## Running Tests
 
    - Ensure you're in the project’s backend/ directory.
    - Activate the virtual environment if it's not active.
