@@ -1,0 +1,97 @@
+summary: "Create a new travel plan"
+description: "Allows the logged-in user to create a new travel plan. The request must be in JSON format and include required travel plan details."
+tags:
+  - Travel Plans
+consumes:
+  - application/json
+parameters:
+  - in: header
+    name: Authorization
+    description: "JWT token for authorization. Example: Bearer <your_token>"
+    required: true
+    type: string
+  - in: body
+    name: body
+    description: "Travel plan object that needs to be created"
+    required: true
+    schema:
+      type: object
+      properties:
+        title:
+          type: string
+          description: "Title of the travel plan"
+          example: "Vacation in Lagos"
+        state:
+          type: string
+          description: "State for the travel destination"
+          example: "Lagos"
+        city:
+          type: string
+          description: "City for the travel destination"
+          example: "Ikeja"
+        start_date:
+          type: string
+          description: "Start date of the travel plan"
+          example: "2024-11-01"
+        end_date:
+          type: string
+          description: "End date of the travel plan"
+          example: "2024-11-15"
+        activities:
+          type: string
+          description: "Planned activities for the travel"
+          example: "Sightseeing, beach outing, hiking"
+        budget:
+          type: number
+          description: "Estimated budget for the travel"
+          example: 5000
+        accommodation_details:
+          type: string
+          description: "Accommodation details for the travel"
+          example: "Hotel in Victoria Island"
+      required:
+        - title
+        - state
+        - city
+        - start_date
+        - end_date
+responses:
+  "201":
+    description: "Travel plan created successfully"
+    schema:
+      type: object
+      properties:
+        id:
+          type: string
+          example: "123e4567-e89b-12d3-a456-426614174000"
+        user_id:
+          type: string
+          example: "550e8400-e29b-41d4-a716-446655440000"
+        title:
+          type: string
+          example: "Vacation in Lagos"
+        state:
+          type: string
+          example: "Lagos"
+        city:
+          type: string
+          example: "Ikeja"
+        start_date:
+          type: string
+          example: "2024-11-01"
+        end_date:
+          type: string
+          example: "2024-11-15"
+        activities:
+          type: string
+          example: "Sightseeing, beach outing, hiking"
+        budget:
+          type: number
+          example: 5000
+        accommodation_details:
+          type: string
+          example: "Hotel in Victoria Island"
+  "400":
+    description: "Bad request, such as missing or unexpected fields, or invalid JSON format"
+  "500":
+    description: "Internal server error"

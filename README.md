@@ -30,11 +30,23 @@
 
 ## Technologies Used
 
-- **Frontend:** React, JavaScript, HTML, CSS, Bootstrap
-- **Backend:** Flask, Python
-- **Database:** MySQL
+## **Backend:**
+
+- **Python 3:** The core programming language.
+- **Flask:** The main web framework for building the backend API.
+- **Flask-SQLAlchemy:** Used as the ORM for database interactions.
+- **MySQL:** The main database for storing application data.
+- **SQLite:** Used as an in-memory database for testing.
+- **JWT (JSON Web Tokens):** For secure user authentication.
+- **Flasgger:** To generate API documentation.
+- **Flask-CORS:** To manage cross-origin requests.
+- **Flask-Migrate:** For database migrations.
+
+## **Frontend:**
+
+React, JavaScript, HTML, CSS, Bootstrap
+
 - **Version Control:** Git
-- **Deployment:** TBD
 
 ## Installation
 
@@ -48,6 +60,20 @@
    ```
 
 ### Backend Setup
+
+**Pre-requisites:**
+
+- Python 3.10 or higher
+- MySQL
+- pip
+- Set up MySQL credentials, setting a password for the root user, which will be referenced in a .env file for the project.
+
+Run below commands to install essential development tools and MySQL libraries required to compile and link dependencies like mysqlclient for the GoPlan backend:
+
+```bash
+sudo apt update
+sudo apt install pkg-config libmysqlclient-dev build-essential
+```
 
 3. **Navigate to the Backend Directory:**
    ```bash
@@ -64,16 +90,28 @@
    pip install -r requirements.txt
    ```
 6. **Configure MySQL Database:**
-   - Create a MySQL database.
-   - Update `SQLALCHEMY_DATABASE_URI` in `config.py` with your credentials.
-   ```python
-   SQLALCHEMY_DATABASE_URI = 'mysql://username:password@localhost/gotravel_db'
-   ```
 
-7. **Run Migrations:**
+   - Create a file in the backend/ directory named .env to manage environment variables.
+   - Add the following variables to the .env file:
+
+     - GO_PLAN_USER=mysql-username
+     - GO_PLAN_MYSQL_PWD=mysql-password
+     - GO_PLAN_MYSQL_DB=database-name
+     - GO_PLAN_MYSQL_HOST=localhost
+     - ROOT_MYSQL_PWD=mysql-root-password
+     - JWT_SECRET_KEY=jwt-secret-key
+     - JWT_ACCESS_TOKEN_EXPIRES=seconds
+
+     **_NB: Ensure to replace the values for these variables with your desired credentials.
+     For the ROOT_MYSQL_PWD environment variable, the value MUST match your MySQL root password._**
+
+   - From the backend directory, create the database credentials for the app using a script we have implemented for it.
+     Run: `python3 scripts/setup_db.py`
+     - If everything goes well, the message **_"Database and user setup complete."_** shall be logged to the console.
+
+7. **Run Database Upgrades:**
+
    ```bash
-   flask db init
-   flask db migrate
    flask db upgrade
    ```
 
@@ -81,6 +119,18 @@
    ```bash
    flask run
    ```
+
+   - The backend server will now be running at http://127.0.0.1:5000
+
+   ## Swagger Documentation
+   - Proper documentation on how to access various endpoints of the GoPlan API can be found on http://localhost:5000/apidocs/ once the server is running.
+   - You can also test the endpoints via the Swagger UI at http://localhost:5000/apidocs/
+
+   ## Running Tests
+
+   - Ensure you're in the project’s backend/ directory.
+   - Activate the virtual environment if it's not active.
+   - Run all tests: `python3 -m unittest discover tests`
 
 ### Frontend Setup
 
@@ -90,12 +140,14 @@
    ```
 
 10. **Install Node Version 16:**
-   ```bash
-   nvm install 16
-   nvm use 16
-   ```
+
+```bash
+nvm install 16
+nvm use 16
+```
 
 11. **Install Frontend Dependencies:**
+
     ```bash
     npm install
     ```

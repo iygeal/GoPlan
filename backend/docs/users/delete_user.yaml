@@ -1,0 +1,29 @@
+summary: "Delete a user by ID"
+description: "Remove a user from the system by providing their unique user ID. Ensure the access token is included in the Authorization header."
+tags:
+  - Users
+security:
+  - Bearer: []
+parameters:
+  - in: path
+    name: user_id
+    type: string
+    required: true
+    description: "The unique identifier of the user"
+    example: "550e8400-e29b-41d4-a716-446655440000"
+responses:
+  "200":
+    description: "User deleted successfully from GoPlan DB."
+    schema:
+      type: object
+      properties:
+        success:
+          type: boolean
+          example: true
+        message:
+          type: string
+          example: "User deleted"
+  "404":
+    description: "User not found."
+  "500":
+    description: "Internal server error."

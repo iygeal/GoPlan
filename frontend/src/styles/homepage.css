@@ -1,0 +1,195 @@
+/* Existing styles */
+.homepage {
+  min-height: 100vh;
+  background-color: #f9f9f9;
+  justify-content: space-between;
+}
+
+header {
+  box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.logo {
+  width: 120px;
+}
+
+
+.profile-icon {
+  position: relative;
+  margin-right: 100px;
+}
+
+.profile-icon img {
+  width: 30px;
+  cursor: pointer;
+}
+
+/* Dropdown styling */
+.dropdown-menu {
+  display: block;
+  position: absolute;
+  top: 40px;
+  right: 0;
+  transform: translateX(-10px);
+  background-color: white;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+  width: 150px;
+  z-index: 1000;
+  padding: 5px 0;
+}
+
+.dropdown-menu.hidden {
+  display: none;
+}
+
+.dropdown-item {
+  padding: 10px;
+  cursor: pointer;
+  color: #333;
+  text-align: left;
+  padding-left: 15px;
+}
+
+.dropdown-item:hover {
+  background-color: #f5f5f5;
+}
+
+/* Form styling */
+.homepage-form {
+  max-width: 600px;
+  width: 100%;
+  padding: 20px;
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.homepage-form .form-group {
+  margin-bottom: 20px;
+}
+
+.homepage-form label {
+  font-weight: bold;
+  color: #333;
+}
+
+.homepage-form .form-control,
+.homepage-form .form-select {
+  height: 45px;
+  border-radius: 5px;
+  border: 1px solid #ddd;
+  padding: 10px;
+}
+
+.homepage-form textarea.form-control {
+  height: 100px;
+  resize: vertical;
+  padding: 10px;
+}
+
+.homepage-form .input-group .form-control {
+  border-left: none;
+}
+
+.homepage-form .input-group .form-select {
+  border-radius: 5px 0 0 5px;
+}
+
+.homepage-form button {
+  width: 100%;
+  height: 50px;
+  border-radius: 5px;
+  background-color: #28a745;
+  color: #fff;
+  font-weight: bold;
+  border: none;
+  transition: background-color 0.3s ease;
+}
+
+.homepage-form button:hover {
+  background-color: #218838;
+}
+
+/* Responsive styles */
+
+/* Medium screens (tablets) */
+@media (max-width: 768px) {
+  .logo {
+    width: 100px;
+  }
+
+  .dropdown-menu {
+    right: -10px;
+    transform: translateX(-5px);
+    width: 130px;
+  }
+
+  .homepage-form {
+    max-width: 100%;
+    padding: 15px;
+  }
+}
+
+/* Small screens (mobile phones) */
+@media (max-width: 576px) {
+  .logo {
+    width: 80px;
+  }
+
+  .dropdown-menu {
+    right: 10px;
+    transform: translateX(-10px);
+    width: 100%;
+    box-shadow: none;
+    border-radius: 0;
+  }
+
+  .homepage-form {
+    padding: 10px;
+  }
+}
+
+select.form-control {
+  width: 100%;  /* Make sure dropdown takes full width of its container */
+  padding: 0.375rem 0.75rem;
+  font-size: 1rem;
+  line-height: 1.5;
+  border-radius: 0.25rem;
+}
+
+/* Optional: Style for better visibility of error messages */
+small.text-danger {
+  font-size: 0.875rem;
+  margin-top: 5px;
+  display: block;
+}
+
+/* Ensures that the dropdown has the correct positioning */
+.dropdown-container {
+  position: relative; /* Make sure the dropdown is positioned relative to the parent */
+}
+
+/* Adjusts the dropdown menu to appear below the input field */
+.dropdown-menu {
+  position: absolute;
+  top: 100%; /* This ensures that the dropdown is below the input field */
+  left: 0;
+  right: 0;
+  background-color: #ffffff;
+  border: 1px solid #dee2e6;
+  box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2);
+  z-index: 1000;
+  max-height: 200px;
+  overflow-y: auto;
+}
+
+.dropdown-item {
+  padding: 8px 16px;
+  cursor: pointer;
+}
+
+.dropdown-item:hover {
+  background-color: #f1f1f1;
+}

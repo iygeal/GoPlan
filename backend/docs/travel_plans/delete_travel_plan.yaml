@@ -1,0 +1,30 @@
+summary: "Delete a specific travel plan"
+description: "Remove a travel plan for the authenticated user by specifying the plan ID. This will also delete the associated entry from the user's dashboard."
+tags:
+  - Travel Plans
+parameters:
+  - in: path
+    name: plan_id
+    description: "ID of the travel plan to delete"
+    required: true
+    type: string
+  - in: header
+    name: Authorization
+    description: "JWT token for authorization. Example: Bearer <your_token>"
+    required: true
+    type: string
+responses:
+  "200":
+    description: "Travel plan deleted successfully"
+    schema:
+      type: object
+      properties:
+        message:
+          type: string
+          example: "Travel plan deleted successfully"
+  "404":
+    description: "Travel plan not found"
+  "401":
+    description: "Unauthorized access - JWT token missing or invalid"
+  "500":
+    description: "Internal server error"
